@@ -1,0 +1,10 @@
+p {
+    text-align: left;
+    
+}
+
+.center {
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
