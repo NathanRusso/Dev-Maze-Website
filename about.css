@@ -3,8 +3,6 @@ p {
     
 }
 
-.center {
+.about {
     max-width: 550px;
-    margin-left: auto;
-    margin-right: auto;
 }
