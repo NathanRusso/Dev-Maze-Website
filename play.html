@@ -5,26 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Play Dev-Maze</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="play.css" />
 </head>
 <body>
-    <h1>Play Dev-Maze</h1>
-    <div class="center">
+    <h1 id="play_title">Play Dev-Maze</h1>
+    <div id="size_selection" class="center" >
         <form>
-            <label for="row">Rows: </label>
-            <select name="row" id="row" style="margin-right: 5px;">
+            <label id="row_label" for="row_select">Rows: </label>
+            <select id="row_select" name="row">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
             </select>
-            <label for="col">Columns: </label>
-            <select name="col" id="col" style="margin-left: 5px;">
+            <label id="col_label" for="col_select">Columns: </label>
+            <select id="col_select" name="col">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
             </select>
         </form>
+    </div>
+    <div id="maze">
+        <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
+    </div>
+    <div id="d_pad">
+        <!-- Input goes here -->
     </div>
 </body>
 </html>

@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:play.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\main.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:about.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\instructions.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:instructions.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:play.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\main.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\maze.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -38,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -64,40 +68,66 @@
               "RelativeDocumentMoniker": "style.css",
               "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\style.css",
               "RelativeToolTip": "style.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-12-08T00:34:37.455Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "maze.js",
-              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\maze.js",
-              "RelativeDocumentMoniker": "maze.js",
-              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\maze.js",
-              "RelativeToolTip": "maze.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-12-08T00:34:56.707Z",
+              "DocumentIndex": 3,
+              "Title": "about.css",
+              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.css",
+              "RelativeDocumentMoniker": "about.css",
+              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.css",
+              "RelativeToolTip": "about.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-12-21T16:13:40.015Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "main.html",
               "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\main.html",
               "RelativeDocumentMoniker": "main.html",
               "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\main.html",
               "RelativeToolTip": "main.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2024-12-08T00:30:37.994Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "play.html",
+              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html",
+              "RelativeDocumentMoniker": "play.html",
+              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html",
+              "RelativeToolTip": "play.html",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-12-08T15:57:38.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "about.html",
+              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html",
+              "RelativeDocumentMoniker": "about.html",
+              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html",
+              "RelativeToolTip": "about.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-12-20T00:46:03.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "instructions.html",
               "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\instructions.html",
               "RelativeDocumentMoniker": "instructions.html",
@@ -110,33 +140,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "play.html",
-              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html",
-              "RelativeDocumentMoniker": "play.html",
-              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\play.html",
-              "RelativeToolTip": "play.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-12-08T15:57:38.452Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "about.html",
-              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html",
-              "RelativeDocumentMoniker": "about.html",
-              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\about.html",
-              "RelativeToolTip": "about.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-12-20T00:46:03.677Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "maze.js",
+              "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\maze.js",
+              "RelativeDocumentMoniker": "maze.js",
+              "ToolTip": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\maze.js",
+              "RelativeToolTip": "maze.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-12-08T00:34:56.707Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\natha\\Documents\\CSH Major Project 2024-2025\\Dev-Maze-Website\\README.md",
               "RelativeDocumentMoniker": "README.md",
@@ -144,8 +160,7 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2024-12-07T22:50:05.502Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T22:50:05.502Z"
             }
           ]
         }

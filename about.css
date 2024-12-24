@@ -1,8 +1,11 @@
 p {
     text-align: left;
-    
 }
 
-.about {
+#about_title {
+    min-width: 250px
+}
+
+#about {
     max-width: 550px;
 }

@@ -1,0 +1,21 @@
+#play_title {
+    min-width: 230px
+}
+
+#size_selection {
+    display: none;
+}
+
+#row_select {
+    margin-right: 5px;
+}
+
+#col_label {
+    margin-left: 5px;
+}
+
+@media screen and (min-width: 230px) {
+    #size_selection {
+        display: block;
+    }
+}

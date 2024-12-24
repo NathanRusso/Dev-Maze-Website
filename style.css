@@ -27,3 +27,7 @@ a:hover, a:active {
     background-color: transparent;
     text-decoration: none;
 }
+
+#main_title {
+    min-width: 180px;
+}
