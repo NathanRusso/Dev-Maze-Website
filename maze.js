@@ -1,38 +1,73 @@
-// The current available width and height of the screen.
-var screenWidth = window.screen.availWidth;
-var screenHeight = window.screen.availHeight;
+// The current available width and height of the screen
+var screenWidth = Math.min(window.innerWidth, screen.availWidth);
+var screenHeight = Math.min(window.innerHeight, screen.availHeight);
 
-// Changes screen variables when screen chnages.
+// This saves the total height of the elements above the maze
+var playTitle = document.getElementById("play_title");
+var sizeInput = document.getElementById("size_input");
+var upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
+
+// The minimum pixel size for a block in the maze
+var minBlockSize = 20;
+
+// This is the current maze canvas, and sets its dimensions
+// The width and height of the maze canvas are multiples of 20
+var mazeCanvas = document.getElementById("maze_canvas");
+mazeCanvas.width = getMaxMazeWidth();
+mazeCanvas.height = getMaxMazeHeight();
+
+// These are the row and columns input elements
+// There maximum row and column values are set
+var rowInput = document.getElementById("row_input");
+var colInput = document.getElementById("col_input");
+rowInput.max = getMaxRow();
+colInput.max = getMaxCol();
+
+// Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
-    screenWidth = window.screen.availWidth;
-    screenHeight = window.screen.availHeight;
+    // This updates the screen width and height and the upper height
+    screenWidth = Math.min(window.innerWidth, screen.availWidth);
+    screenHeight = Math.min(window.innerHeight, screen.availHeight);
+    upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
+
+    // This updates the maze canvas width and height and its maximum row and column values
+    mazeCanvas.width = getMaxMazeWidth();
+    mazeCanvas.height = getMaxMazeHeight();
+    rowInput.max = getMaxRow();
+    colInput.max = getMaxCol();
+    rowInput.value = null;
+    colInput.value = null;
 });
 
-/**
- * This gets the available screen width.
- * 
- * @returns available screen width.
- */
-function getScreenWidth() { return screenWidth; }
+//------------------------------ FUNCTIONS BELOW ------------------------------//
 
 /**
- * This gets the available screen height.
+ * This finds the size of the maze canvas width based on the screen width.
+ * The canvas width is a multiple of 20.
  * 
- * @returns available screen height.
+ * @returns the possible width of the maze canvas
  */
-function getScreenHeight() { return screenHeight; }
+function getMaxMazeWidth() { return Math.floor(screenWidth * 0.04) * 20; }
+
+/**
+ * This finds the size of the maze canvas height based on the screen height.
+ * The canvas height is a multiple of 20.
+ * 
+ * @returns the possible height of the maze canvas
+ */
+function getMaxMazeHeight() { return Math.floor((screenHeight - upperHeight) * 0.04) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,
  *  given the current window size.
  */
-function getMaxRow() { return 40; } // temporary 40
+function getMaxRow() { return mazeCanvas.height / minBlockSize; }
 
 /**
  * This function finds the maximum number of columns that the maze can have,
  *  given the current window size.
  */
-function getMaxColumns() { return 40; } // temporary 40
+function getMaxCol() { return mazeCanvas.width / minBlockSize; }
 
 /**
  * This ensures that the row value inside the input is valid.
@@ -41,21 +76,26 @@ function getMaxColumns() { return 40; } // temporary 40
  * @param {any} event - The event that triggers the function.
  */
 function resetRow(event) {
-    var row_input = document.getElementById("row_input").value;
+    var rowValue = rowInput.value;
     var charCode = (event.which) ? event.which : event.keyCode;
-    if (isNaN(row_input)) {
-        document.getElementById("row_input").value = null;
-    } else if (charCode > 32 && (charCode < 48 || charCode > 57)) {
-        document.getElementById("row_input").value = 1;
-    } else if (row_input.length != 0) {
-        if (!Number.isInteger(Number(row_input))) {
-            row_input = Math.floor(Number(row_input));
-            document.getElementById("row_input").value = row_input;
+
+    console.log(rowValue);
+    console.log(charCode);
+
+    if (isNaN(rowValue)) {
+        rowInput.value = null;
+    } else if (charCode > 32 && charCode != 38 && charCode != 40 && (charCode < 48 || charCode > 57)) {
+        rowInput.value = 1;
+    } else if (rowValue.length != 0) {
+        rowValue = Number(rowValue);
+        if (!Number.isInteger(rowValue)) {
+            rowValue = Math.floor(rowValue);
+            rowInput.value = rowValue;
         }
-        if (row_input < 1) {
-            document.getElementById("row_input").value = 1;
-        } else if (row_input > getMaxRow()) {
-            document.getElementById("row_input").value = 40;
+        if (rowValue < 1) {
+            rowInput.value = 1;
+        } else if (rowValue > Number(rowInput.max)) {
+            rowInput.value = Number(rowInput.max);
         }
     }
 }
@@ -67,21 +107,22 @@ function resetRow(event) {
  * @param {any} event - The event that triggers the function.
  */
 function resetCol(event) {
-    var col_input = document.getElementById("col_input").value;
+    var colValue = colInput.value;
     var charCode = (event.which) ? event.which : event.keyCode;
-    if (isNaN(col_input)) {
-        document.getElementById("col_input").value = null;
-    } else if (charCode > 32 && (charCode < 48 || charCode > 57)) {
-        document.getElementById("col_input").value = 1;
-    } else if (col_input.length != 0) {
-        if (!Number.isInteger(Number(col_input))) {
-            col_input = Math.floor(Number(col_input));
-            document.getElementById("col_input").value = col_input;
+    if (isNaN(colValue)) {
+        colInput.value = null;
+    } else if (charCode > 32 && charCode != 38 && charCode != 40 && (charCode < 48 || charCode > 57)) {
+        colInput.value = 1;
+    } else if (colValue.length != 0) {
+        colValue = Number(colValue);
+        if (!Number.isInteger(colValue)) {
+            colValue = Math.floor(colValue);
+            colInput.value = colValue;
         }
-        if (col_input < 1) {
-            document.getElementById("col_input").value = 1;
-        } else if (col_input > getMaxColumns()) {
-            document.getElementById("col_input").value = 40;
+        if (colValue < 1) {
+            colInput.value = 1;
+        } else if (colValue > Number(colInput.max)) {
+            colInput.value = Number(colInput.max);
         }
     }
 }
