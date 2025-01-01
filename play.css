@@ -2,11 +2,11 @@
     min-width: 230px
 }
 
-#size_selection {
+#size_input {
     display: none;
 }
 
-#row_select {
+#row_input {
     margin-right: 5px;
 }
 
@@ -15,7 +15,22 @@
 }
 
 @media screen and (min-width: 230px) {
-    #size_selection {
+    #size_input {
         display: block;
     }
+}
+
+#maze {
+
+}
+
+#maze_canvas {
+    width: 35vw;
+    height: 35vw;
+    border: 2px solid black;
+    border-block-color: black;
+}
+
+#d_pad {
+
 }

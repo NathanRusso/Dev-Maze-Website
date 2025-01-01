@@ -6,37 +6,25 @@
     <title>Play Dev-Maze</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="play.css" />
+    <script type="text/javascript" src="maze.js"></script>
 </head>
 <body>
     <h1 id="play_title">Play Dev-Maze</h1>
-    <div id="size_selection" class="center" >
+    <div id="size_input" class="center" >
         <form>
-            <label id="row_label" for="row_select">Rows: </label>
-            <select id="row_select" name="row">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-            <label id="col_label" for="col_select">Columns: </label>
-            <select id="col_select" name="col">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
+            <label id="row_label" for="row_input">Rows: </label>
+            <input id="row_input" name="row" type="number" min="1" max="40" onkeyup="resetRow(event)">
+            <label id="col_label" for="col_input">Columns: </label>
+            <input id="col_input" name="col" type="number" min="1" max="40" onkeyup="resetCol(event)">
         </form>
+        <!--<button>Generate Maze</button>-->
     </div>
-    <div id="maze">
+    <br />
+    <div id="maze" class="center">
         <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
+        <canvas id="maze_canvas">
+
+        </canvas>
     </div>
     <div id="d_pad">
         <!-- Input goes here -->
