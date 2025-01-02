@@ -15,10 +15,9 @@
             <input id="row_input" name="row" type="number" min="1" onkeyup="resetRow(event)">
             <label id="col_label" for="col_input">Columns: </label>
             <input id="col_input" name="col" type="number" min="1" onkeyup="resetCol(event)">
+            <input id="sub_input" type="submit" value="Generate Maze" />
         </form>
-        <!--<button>Generate Maze</button>-->
     </div>
-    <br />
     <div id="maze" class="center">
         <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
         <canvas id="maze_canvas">
@@ -27,6 +26,7 @@
     <div id="d_pad">
         <!-- Input goes here -->
     </div>
+    <script type="text/javascript" src="canvas.js"></script>
     <script type="text/javascript" src="maze.js"></script>
 </body>
 </html>

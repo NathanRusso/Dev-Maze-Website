@@ -4,6 +4,7 @@
 
 #size_input {
     display: none;
+    padding-bottom: 20px;
 }
 
 #row_input {
@@ -14,7 +15,15 @@
     margin-left: 5px;
 }
 
-@media screen and (min-width: 230px) {
+#col_input {
+    margin-right: 5px;
+}
+
+#sub_input {
+    margin-left: 5px;
+}
+
+@media screen and (min-width: 250px) {
     #size_input {
         display: block;
     }
