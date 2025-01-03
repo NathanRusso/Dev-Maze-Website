@@ -1,3 +1,6 @@
+// Exports the Maze class to be used in other files
+import { Maze } from "./maze.js";
+
 // The current available width and height of the screen
 let screenWidth = Math.min(window.innerWidth, screen.availWidth);
 let screenHeight = Math.min(window.innerHeight, screen.availHeight);
@@ -59,6 +62,17 @@ for (let i = 0; i < mazeCanvas.width; i += minBlockSize) {
         c.stroke();
     }
 }
+
+
+// This creates and generates a new maze with 20 rows and 20 columns and 
+let maze = new Maze(20, 20);
+maze.generateMaze();
+
+
+
+
+
+
 
 //------------------------------ FUNCTIONS BELOW ------------------------------//
 
