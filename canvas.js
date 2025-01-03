@@ -319,7 +319,7 @@ class Maze {
 
 
 
-
+// Test push
 // Exports the Maze class to be used in other files
 //import { Maze } from "./maze.js";
 
