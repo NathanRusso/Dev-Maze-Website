@@ -36,10 +36,10 @@ class Block {
  * This is a class to hold the a maze to play.
  * Exports the Maze class to be used in other files //////////////////////////////////////////
  */
-class Maze {
+export class Maze {
     // Private variables
-    #avaliblePoints = []; // The points that can be used to generate the maze
-    #directions = ["N", "E", "S", "W"]; // The 4 #directions that can be taken
+    #availablePoints = []; // The points that can be used to generate the maze
+    #directions = ["N", "E", "S", "W"]; // The 4 directions that can be taken
 
     /**
      * This creates a new maze with the given number of rows and columns.
@@ -54,10 +54,27 @@ class Maze {
         for (let y = 0; y < rows; y++) {
             this.maze.push([]);
             for (let x = 0; x < columns; x++) {
-                this.maze[i].push(new Block(y, x));
-                this.#avaliblePoints.push([y, x]);
+                this.maze[y].push(new Block(y, x));
+                this.#availablePoints.push([y, x]);
             }
         }
+    }
+
+    /**
+     * This finds the index of a given point in a 2d array.
+     * -1 means it doesnt exist in the array.
+     * 
+     * @param {any} array - the 2d array to search through
+     * @param {any} point - the point to find in the array
+     * @returns the points index
+     */
+    #indexIn2dArray(array, point) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i][0] == point[0] && array[i][1] == point[1]) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -70,15 +87,19 @@ class Maze {
 
     /**
      * This sets the point's block to in the maze.
-     * It then removes the point from the avalible points.
+     * It then removes the point from the available points.
      * 
-     * @param {Arry} point - The point to remove 
+     * @param {Array} point - The point to remove 
      */
     #addBlockRemovePoint(point) {
+        console.log(point);
+        console.log(this.maze);
+        console.log(this.#getBlockAt(point));
         this.#getBlockAt(point).visited = false;
         this.#getBlockAt(point).inTheMaze = true;
-        let index = this.#avaliblePoints.indexOf(point);
-        this.#avaliblePoints.splice(index, 1);
+        let index = this.#indexIn2dArray(this.#availablePoints, point);
+        console.log("INDEX: " + index);
+        this.#availablePoints.splice(index, 1);
     }
 
     /**
@@ -96,19 +117,31 @@ class Maze {
      * @param {Array} visited - the array of visited points
      */
     #removeLoop(next, visited) {
+        console.log("REMOVE LOOP" + next);
         // This saves the initial length of visisted
         let length = visited.length;
 
         // This saves the index of the point after the duplicate
-        let after = visited.indexOf(next) + 1;
+        let after = this.#indexIn2dArray(visited, next) + 1;
+        console.log("AFTER: " + after);
 
         // This restes all blocks after the duplicate
         for (let i = after; i < visited.length; i++) {
             this.#getBlockAt(visited[i]).reset();
         }
 
+        console.log("BEFORE");
+        console.log(next);
+        console.log("NEXT A^^^");
+        for (let i = 0; i < visited.length; i++) {
+            console.log(visited[i]);
+        }
         // This removes the loop from the path
-        visited.slice(after, length - after);
+        visited.splice(after, length - after);
+        console.log("AFTER");
+        for (let i = 0; i < visited.length; i++) {
+            console.log(visited[i]);
+        }
     }
 
     /**
@@ -123,8 +156,18 @@ class Maze {
         let currentBlock = this.#getBlockAt(current);
         let next = null;
 
+        for (let i = 0; i < visited.length; i++) {
+            console.log(visited[i]);
+        }
+
         // This loops until the current block is in the maze, the path is complete
         while (currentBlock.inTheMaze == false) {
+
+            console.log("VIST")
+            for (let i = 0; i < visited.length; i++) {
+                console.log(visited[i]);
+            };
+
             // This generates a random direction for the path to go
             let direction = this.#generateRandomDirection();
 
@@ -236,24 +279,26 @@ class Maze {
      */
     generateMaze() {
         // Returns a random integer from 0 to the number of avaliable points - 1
-        let firstIndex = Math.floor(Math.random() * this.#avaliblePoints.length);
+        let firstIndex = Math.floor(Math.random() * this.#availablePoints.length);
 
         // This gets the first point to start the maze generation
-        let firstPoint = this.#avaliblePoints[firstIndex]; console.log(firstPoint);
+        let firstPoint = this.#availablePoints[firstIndex]; console.log(firstPoint);
 
         // This adds the first block to the maze
         this.#getBlockAt(firstPoint).inTheMaze = true;
 
-        // This removes the first point from the avalible points.
-        this.#avaliblePoints.splice(firstIndex, 1);
+        // This removes the first point from the available points.
+        this.#availablePoints.splice(firstIndex, 1);
 
-        // This loops until there are no more avalible points to add to the maze
-        while (this.#avaliblePoints.length > 0) {
+        // This loops until there are no more available points to add to the maze
+        while (this.#availablePoints.length > 0) {
             // This gets a start point for the new path in the maze.
-            let startPoint = this.#avaliblePoints[Math.floor(Math.random() * this.#avaliblePoints.length)];
+            let startPoint = this.#availablePoints[Math.floor(Math.random() * this.#availablePoints.length)];
+            console.log("START POINT");
+            console.log(startPoint);
 
             // This will hold the points in the maze that will be added in as a new path
-            let visitedPoints = [startPoint];
+            const visitedPoints = [startPoint];
 
             // This marks the start point as visited
             this.#getBlockAt(startPoint).visited = true;
@@ -261,8 +306,9 @@ class Maze {
             // This creates a new path of points for the maze
             this.#generatePath(startPoint, visitedPoints);
 
-            // THis adds all of the visisted points to the maze
-            // It then removes the points from the avalible points
+
+            // This adds all of the visisted points to the maze
+            // It then removes the points from the available points
             visitedPoints.forEach(this.#addBlockRemovePoint);
         }
     }
