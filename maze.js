@@ -36,7 +36,7 @@ class Block {
  * This is a class to hold the a maze to play.
  * Exports the Maze class to be used in other files //////////////////////////////////////////
  */
-export class Maze {
+class Maze {
     // Private variables
     #avaliblePoints = []; // The points that can be used to generate the maze
     #directions = ["N", "E", "S", "W"]; // The 4 #directions that can be taken
