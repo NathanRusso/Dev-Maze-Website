@@ -44,12 +44,14 @@ let sizeForm = document.getElementById("size_form");
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
 
-    
+
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
 
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
+    console.log("WINDOE EVENT");
+
     // This updates the screen width and height and the upper height
     screenWidth = Math.min(window.innerWidth, screen.availWidth);
     screenHeight = Math.min(window.innerHeight, screen.availHeight);
@@ -69,6 +71,9 @@ window.addEventListener('resize', function () {
  * It must be any whole number between 1 and the max.
  */
 rowInput.addEventListener('keyup', function resetRow(event) {
+    console.log("ROW EVENT");
+
+
     let rowValue = rowInput.value;
     if (isNaN(rowValue)) {
         rowInput.value = null;
@@ -95,6 +100,10 @@ rowInput.addEventListener('keyup', function resetRow(event) {
  * It must be any whole number between 1 and the max.
  */
 colInput.addEventListener('keyup', function resetCol(event) {
+    console.log("COL EVENT");
+
+
+
     let colValue = colInput.value;
     if (isNaN(colValue)) {
         colInput.value = null;
@@ -116,6 +125,14 @@ colInput.addEventListener('keyup', function resetCol(event) {
 
 // This creates and displays a new maze when given new input
 sizeForm.addEventListener('submit', function (event) {
+    console.log("FORM EVENT");
+
+    // This prevents the form from refreshing the page
+    event.preventDefault();
+
+    // This clears the canvas of any previous maze
+    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
     // This saves the row and column values from the input
     let rows = rowInput.value;
     let columns = colInput.value;
@@ -198,57 +215,3 @@ function drawMaze(completedMaze, rows, columns, ct) {
         }
     }
 }
-
-/**
- * This ensures that the row value inside the input is valid.
- * It must be any whole number between 1 and the max.
- * 
- * @param {any} event - The event that triggers the function.
- *
-export function resetRow(event) {
-    let rowValue = rowInput.value;
-    let charCode = (event.which) ? event.which : event.keyCode;
-    if (isNaN(rowValue)) {
-        rowInput.value = null;
-    } else if (charCode > 32 && charCode != 38 && charCode != 40 && (charCode < 48 || charCode > 57)) {
-        rowInput.value = 1;
-    } else if (rowValue.length != 0) {
-        rowValue = Number(rowValue);
-        if (!Number.isInteger(rowValue)) {
-            rowValue = Math.floor(rowValue);
-            rowInput.value = rowValue;
-        }
-        if (rowValue < 1) {
-            rowInput.value = 1;
-        } else if (rowValue > Number(rowInput.max)) {
-            rowInput.value = Number(rowInput.max);
-        }
-    }
-}
-
-/**
- * This ensures that the col value inside the input is valid.
- * It must be any whole number between 1 and the max.
- * 
- * @param {any} event - The event that triggers the function.
- *
-export function resetCol(event) {
-    let colValue = colInput.value;
-    let charCode = (event.which) ? event.which : event.keyCode;
-    if (isNaN(colValue)) {
-        colInput.value = null;
-    } else if (charCode > 32 && charCode != 38 && charCode != 40 && (charCode < 48 || charCode > 57)) {
-        colInput.value = 1;
-    } else if (colValue.length != 0) {
-        colValue = Number(colValue);
-        if (!Number.isInteger(colValue)) {
-            colValue = Math.floor(colValue);
-            colInput.value = colValue;
-        }
-        if (colValue < 1) {
-            colInput.value = 1;
-        } else if (colValue > Number(colInput.max)) {
-            colInput.value = Number(colInput.max);
-        }
-    }
-}*/
