@@ -4,31 +4,30 @@ import { Maze } from "./maze.js";
 // The current available width and height of the screen
 let screenWidth = Math.min(window.innerWidth, screen.availWidth);
 let screenHeight = Math.min(window.innerHeight, screen.availHeight);
-console.log(screenWidth);
-console.log(screenHeight);
 
 // This saves the total height of the elements above the maze
 const playTitle = document.getElementById("play_title");
 const sizeInput = document.getElementById("size_input");
 let upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
-console.log(playTitle.clientHeight);
-console.log(sizeInput.clientHeight);
-console.log(upperHeight);
 
 // This is the current maze canvas, and sets its dimensions
 // The width and height of the maze canvas are multiples of 20
 const mazeCanvas = document.getElementById("maze_canvas");
-let context = mazeCanvas.getContext('2d');
+const context = mazeCanvas.getContext('2d');
 mazeCanvas.width = getMaxMazeWidth();
 mazeCanvas.height = getMaxMazeHeight();
+
+console.log(screenWidth);
+console.log(screenHeight);
+console.log(playTitle.clientHeight);
+console.log(sizeInput.clientHeight);
+console.log(upperHeight);
 console.log(mazeCanvas.width);
 console.log(mazeCanvas.height);
 
-// This declares the objects which will be used to create the maze
-let theMaze;
-
-// The minimum pixel size for a block in the maze
+// This sets the mimumum block size, image size, and maximum block size
 let minBlockSize = 20;
+let maxBlockSize = Math.min(mazeCanvas.width, mazeCanvas.height);
 
 // These are the row and columns input elements
 // There maximum row and column values are set
@@ -67,9 +66,10 @@ window.addEventListener('resize', function () {
     screenHeight = Math.min(window.innerHeight, screen.availHeight);
     upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
 
-    // This updates the maze canvas width and height and its maximum row and column values
+    // This updates the maze canvas width and height, its maximum row and column values, and more
     mazeCanvas.width = getMaxMazeWidth();
     mazeCanvas.height = getMaxMazeHeight();
+    maxBlockSize = Math.min(mazeCanvas.width, mazeCanvas.height);
     rowInput.max = getMaxRow();
     colInput.max = getMaxCol();
     rowInput.value = null;
@@ -148,40 +148,52 @@ sizeForm.addEventListener('submit', function (event) {
     let columns = colInput.value;
 
     // This creates and generates a new maze with 20 rows and 20 columns 
-    theMaze = new Maze(rows, columns);
+    let theMaze = new Maze(rows, columns);
     theMaze.generateMaze();
     const maze = theMaze.maze;
 
+    // This calculates the size of the blocks in the maze
+    let maxNumBlocks = maxBlockSize / Math.min(rows, columns);
+    let blockSize = Math.floor(maxNumBlocks / 5) * 5;
+    if ( blockSize < 20 ) { blockSize = minBlockSize; }
+    let imageSize = Math.floor(blockSize * 0.8);
+    let imageBuffer = Math.floor((blockSize - imageSize) / 2);
+    console.log("IMAGE SIZE: " + imageSize);
+    console.log("IMAGE BUFFER: " + imageBuffer);
+    console.log("BLOCK SIZE: " + blockSize);
+
     // This draws the maze on the canvas
-    drawMaze(maze, rows, columns, context);
+    drawMaze(maze, rows, columns, context, blockSize);
 
     // This sets the start and end positions in the canvas maze
-    let start = [2, (rows - 1) * minBlockSize + 2];
-    let end = [(columns - 1) * minBlockSize + 2, 2];
+    let start = [imageBuffer, (rows - 1) * blockSize + imageBuffer];
+    let end = [(columns - 1) * blockSize + imageBuffer, imageBuffer];
 
     // This sets the player's position to the start of the maze
     let arrowE = [0, rows - 1]; // The exact position of the player
     let arrowP = [start[0], start[1]]; // The pixel position of the player
 
     // This draws the start and end positions on the canvas
-    context.drawImage(imgStart, start[0], start[1], 16, 16);
-    context.drawImage(imgStop, end[0], end[1], 16, 16);
+    context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
+    context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
 
     // This sets the player's position to the start of the maze
     console.log("ROWS: " + rows);
     console.log("COLS: " + columns);
-    context.drawImage(imgArrowN, arrowP[0], arrowP[1], 16, 16);
+    context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
 
     // This moves the player based on input
-    document.addEventListener("keydown", (event) => {
-        // THis clears the arrow and maybe the start or stop sign
-        context.clearRect(arrowP[0], arrowP[1], 16, 16);
+    document.addEventListener("keyup", (event) => {
+        console.log("KEY EVENT");
+
+        // This clears the arrow and maybe the start or stop sign
+        context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
 
         // This redraws the start or stop sign if the player is on it
         if ( arrowP[0] == start[0] && arrowP[1] == start[1] ) {
-            context.drawImage(imgStart, start[0], start[1], 16, 16);
+            context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
         } else if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
-            context.drawImage(imgStop, end[0], end[1], 16, 16);
+            context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
         }
 
         // This redraws the player where needed
@@ -192,9 +204,9 @@ sizeForm.addEventListener('submit', function (event) {
                 if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
                     && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
                     arrowE[1]--;
-                    arrowP[1] -= minBlockSize;
+                    arrowP[1] -= blockSize;
                 }
-                context.drawImage(imgArrowN, arrowP[0], arrowP[1], 16, 16);
+                context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
                 break;
             case "ArrowRight":
             case "D":
@@ -202,9 +214,9 @@ sizeForm.addEventListener('submit', function (event) {
                 if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
                     && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
                     arrowE[0]++;
-                    arrowP[0] += minBlockSize;
+                    arrowP[0] += blockSize;
                 }
-                context.drawImage(imgArrowE, arrowP[0], arrowP[1], 16, 16);
+                context.drawImage(imgArrowE, arrowP[0], arrowP[1], imageSize, imageSize);
                 break;
             case "ArrowDown":
             case "S":
@@ -212,9 +224,9 @@ sizeForm.addEventListener('submit', function (event) {
                 if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
                     && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
                     arrowE[1]++;
-                    arrowP[1] += minBlockSize;
+                    arrowP[1] += blockSize;
                 }
-                context.drawImage(imgArrowS, arrowP[0], arrowP[1], 16, 16);
+                context.drawImage(imgArrowS, arrowP[0], arrowP[1], imageSize, imageSize);
                 break;
             case "ArrowLeft":
             case "A":
@@ -222,10 +234,12 @@ sizeForm.addEventListener('submit', function (event) {
                 if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
                     && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
                     arrowE[0]--;
-                    arrowP[0] -= minBlockSize;
+                    arrowP[0] -= blockSize;
                 }
-                context.drawImage(imgArrowW, arrowP[0], arrowP[1], 16, 16);
+                context.drawImage(imgArrowW, arrowP[0], arrowP[1], imageSize, imageSize);
                 break;
+            default:
+                context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
         }
 
         // The player has reached the end of the maze.
@@ -274,32 +288,33 @@ function getMaxCol() { return mazeCanvas.width / minBlockSize; }
  * @param {*} rows - The number of rows in the maze.
  * @param {*} columns - The number of columns in the maze.
  * @param {*} ct - The context of the canvas.
+ * @param {*} blockSize - The size of each block in the maze.
  */
-function drawMaze(completedMaze, rows, columns, ct) {
+function drawMaze(completedMaze, rows, columns, ct, blockSize) {
     for ( let r = 0; r < rows; r++ ) {
         for ( let c = 0; c < columns; c++ ) {
             ct.beginPath();
             if (completedMaze[r][c].northWall) {
-                ct.moveTo(c * minBlockSize, r * minBlockSize);
-                ct.lineTo((c + 1) * minBlockSize, r * minBlockSize);
+                ct.moveTo(c * blockSize, r * blockSize);
+                ct.lineTo((c + 1) * blockSize, r * blockSize);
                 ct.stroke();
             }
             if (completedMaze[r][c].eastWall) {
                 ct.beginPath();
-                ct.moveTo((c + 1) * minBlockSize, r * minBlockSize);
-                ct.lineTo((c + 1) * minBlockSize, (r + 1) * minBlockSize);
+                ct.moveTo((c + 1) * blockSize, r * blockSize);
+                ct.lineTo((c + 1) * blockSize, (r + 1) * blockSize);
                 ct.stroke()
             }
             if (completedMaze[r][c].southWall) {
                 ct.beginPath();
-                ct.moveTo((c + 1) * minBlockSize, (r + 1) * minBlockSize);
-                ct.lineTo(c * minBlockSize, (r + 1) * minBlockSize);
+                ct.moveTo((c + 1) * blockSize, (r + 1) * blockSize);
+                ct.lineTo(c * blockSize, (r + 1) * blockSize);
                 ct.stroke();
             }
             if (completedMaze[r][c].westWall) {
                 ct.beginPath();
-                ct.moveTo(c * minBlockSize, (r + 1) * minBlockSize);
-                ct.lineTo(c * minBlockSize, r * minBlockSize);
+                ct.moveTo(c * blockSize, (r + 1) * blockSize);
+                ct.lineTo(c * blockSize, r * blockSize);
                 ct.stroke();
             }
         }
