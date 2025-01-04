@@ -6,27 +6,26 @@
     <title>Play Dev-Maze</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="play.css" />
+    <script type="module" src="canvas.js"></script>
 </head>
 <body>
     <h1 id="play_title">Play Dev-Maze</h1>
     <div id="size_input" class="center">
-        <form>
+        <form id="size_form">
             <label id="row_label" for="row_input">Rows: </label>
-            <input id="row_input" name="row" type="number" min="1" onkeyup="resetRow(event)">
+            <input id="row_input" name="row" type="number" value="1" min="1">
             <label id="col_label" for="col_input">Columns: </label>
-            <input id="col_input" name="col" type="number" min="1" onkeyup="resetCol(event)">
+            <input id="col_input" name="col" type="number" value="1" min="1">
             <input id="sub_input" type="submit" value="Generate Maze" />
         </form>
     </div>
     <div id="maze" class="center">
-        <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
         <canvas id="maze_canvas">
+            <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
         </canvas>
     </div>
     <div id="d_pad">
         <!-- Input goes here -->
     </div>
-    <script type="module" src="canvas.js"></script>
-    <!--<script type="text/javascript" src="canvas.js"></script>-->
 </body>
 </html>

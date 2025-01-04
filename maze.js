@@ -138,7 +138,7 @@ export class Maze {
         // This saves the current point and block and creates a next point
         let current = start;
         let currentBlock = this.#getBlockAt(current);
-        let next = null;
+        let next;
 
         // This loops until the current block is in the maze, the path is complete
         while (currentBlock.inTheMaze == false) {
@@ -281,6 +281,7 @@ export class Maze {
             // This adds all of the visisted points to the maze
             // It then removes the points from the available points
             let length = visitedPoints.length;
+
             for (let i = 0; i < length; i++) {
                 this.#addBlockRemovePoint(visitedPoints[i]);
             }
