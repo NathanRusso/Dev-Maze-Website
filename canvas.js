@@ -8,8 +8,8 @@ console.log(screenWidth);
 console.log(screenHeight);
 
 // This saves the total height of the elements above the maze
-let playTitle = document.getElementById("play_title");
-let sizeInput = document.getElementById("size_input");
+const playTitle = document.getElementById("play_title");
+const sizeInput = document.getElementById("size_input");
 let upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
 console.log(playTitle.clientHeight);
 console.log(sizeInput.clientHeight);
@@ -17,7 +17,7 @@ console.log(upperHeight);
 
 // This is the current maze canvas, and sets its dimensions
 // The width and height of the maze canvas are multiples of 20
-let mazeCanvas = document.getElementById("maze_canvas");
+const mazeCanvas = document.getElementById("maze_canvas");
 let context = mazeCanvas.getContext('2d');
 mazeCanvas.width = getMaxMazeWidth();
 mazeCanvas.height = getMaxMazeHeight();
@@ -32,17 +32,27 @@ let minBlockSize = 20;
 
 // These are the row and columns input elements
 // There maximum row and column values are set
-let rowInput = document.getElementById("row_input");
-let colInput = document.getElementById("col_input");
+const rowInput = document.getElementById("row_input");
+const colInput = document.getElementById("col_input");
 rowInput.max = getMaxRow();
 colInput.max = getMaxCol();
 
 // This is the form that houses the row and column inputs
-let sizeForm = document.getElementById("size_form");
+const sizeForm = document.getElementById("size_form");
 
 // This holds which key presses are allowed for row and column inputs
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
+
+// These are the signs to show where the start and end of the maze are.
+const imgStart = document.getElementById("img_start");
+const imgStop = document.getElementById("img_stop");
+
+// These are the arrow image that will be used to show the player's movement
+const imgArrowN = document.getElementById("img_arrow_n");
+const imgArrowE = document.getElementById("img_arrow_e");
+const imgArrowS = document.getElementById("img_arrow_s");
+const imgArrowW = document.getElementById("img_arrow_w");
 
 
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
@@ -140,9 +150,89 @@ sizeForm.addEventListener('submit', function (event) {
     // This creates and generates a new maze with 20 rows and 20 columns 
     theMaze = new Maze(rows, columns);
     theMaze.generateMaze();
+    const maze = theMaze.maze;
 
     // This draws the maze on the canvas
-    drawMaze(theMaze.maze, rows, columns, context);
+    drawMaze(maze, rows, columns, context);
+
+    // This sets the start and end positions in the canvas maze
+    let start = [2, (rows - 1) * minBlockSize + 2];
+    let end = [(columns - 1) * minBlockSize + 2, 2];
+
+    // This sets the player's position to the start of the maze
+    let arrowE = [0, rows - 1]; // The exact position of the player
+    let arrowP = [start[0], start[1]]; // The pixel position of the player
+
+    // This draws the start and end positions on the canvas
+    context.drawImage(imgStart, start[0], start[1], 16, 16);
+    context.drawImage(imgStop, end[0], end[1], 16, 16);
+
+    // This sets the player's position to the start of the maze
+    console.log("ROWS: " + rows);
+    console.log("COLS: " + columns);
+    context.drawImage(imgArrowN, arrowP[0], arrowP[1], 16, 16);
+
+    // This moves the player based on input
+    document.addEventListener("keydown", (event) => {
+        // THis clears the arrow and maybe the start or stop sign
+        context.clearRect(arrowP[0], arrowP[1], 16, 16);
+
+        // This redraws the start or stop sign if the player is on it
+        if ( arrowP[0] == start[0] && arrowP[1] == start[1] ) {
+            context.drawImage(imgStart, start[0], start[1], 16, 16);
+        } else if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+            context.drawImage(imgStop, end[0], end[1], 16, 16);
+        }
+
+        // This redraws the player where needed
+        switch (event.key) {
+            case "ArrowUp":
+            case "W":
+            case "w":
+                if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
+                    && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
+                    arrowE[1]--;
+                    arrowP[1] -= minBlockSize;
+                }
+                context.drawImage(imgArrowN, arrowP[0], arrowP[1], 16, 16);
+                break;
+            case "ArrowRight":
+            case "D":
+            case "d":
+                if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
+                    && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
+                    arrowE[0]++;
+                    arrowP[0] += minBlockSize;
+                }
+                context.drawImage(imgArrowE, arrowP[0], arrowP[1], 16, 16);
+                break;
+            case "ArrowDown":
+            case "S":
+            case "s":
+                if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
+                    && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
+                    arrowE[1]++;
+                    arrowP[1] += minBlockSize;
+                }
+                context.drawImage(imgArrowS, arrowP[0], arrowP[1], 16, 16);
+                break;
+            case "ArrowLeft":
+            case "A":
+            case "a":
+                if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
+                    && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
+                    arrowE[0]--;
+                    arrowP[0] -= minBlockSize;
+                }
+                context.drawImage(imgArrowW, arrowP[0], arrowP[1], 16, 16);
+                break;
+        }
+
+        // The player has reached the end of the maze.
+        if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+            console.log("Congratulations! You have reached the end of the maze!");
+        }
+    });
 });
 
 
