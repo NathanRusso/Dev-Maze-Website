@@ -25,9 +25,8 @@ console.log(upperHeight);
 console.log(mazeCanvas.width);
 console.log(mazeCanvas.height);
 
-// This sets the mimumum block size, image size, and maximum block size
+// This sets the mimumum block size
 let minBlockSize = 20;
-let maxBlockSize = Math.min(mazeCanvas.width, mazeCanvas.height);
 
 // These are the row and columns input elements
 // There maximum row and column values are set
@@ -41,7 +40,7 @@ const sizeForm = document.getElementById("size_form");
 
 // This holds which key presses are allowed for row and column inputs
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-    'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
+    'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Enter'];
 
 let mazeSolved = false;
 
@@ -90,11 +89,10 @@ window.addEventListener('resize', function () {
     // This updates the maze canvas width and height, its maximum row and column values, and more
     mazeCanvas.width = getMaxMazeWidth();
     mazeCanvas.height = getMaxMazeHeight();
-    maxBlockSize = Math.min(mazeCanvas.width, mazeCanvas.height);
     rowInput.max = getMaxRow();
     colInput.max = getMaxCol();
-    rowInput.value = null;
-    colInput.value = null;
+    rowInput.value = 1;
+    colInput.value = 1;
 });
 
 /**
@@ -102,11 +100,9 @@ window.addEventListener('resize', function () {
  * It must be any whole number between 1 and the max.
  */
 rowInput.addEventListener('keyup', function resetRow(event) {
-    console.log("ROW EVENT");
-
     let rowValue = rowInput.value;
     if (isNaN(rowValue)) {
-        rowInput.value = null;
+        rowInput.value = 1;
     } else if (!allowedKeys.includes(event.key)) {
         console.log(rowInput.value);
         rowInput.value = 1;
@@ -130,11 +126,9 @@ rowInput.addEventListener('keyup', function resetRow(event) {
  * It must be any whole number between 1 and the max.
  */
 colInput.addEventListener('keyup', function resetCol(event) {
-    console.log("COL EVENT");
-
     let colValue = colInput.value;
     if (isNaN(colValue)) {
-        colInput.value = null;
+        colInput.value = 1;
     } else if (!allowedKeys.includes(event.key)) {
         colInput.value = 1;
     } else if (colValue.length != 0) {
@@ -174,16 +168,10 @@ sizeForm.addEventListener('submit', function (event) {
     maze = theMaze.maze;
 
     // This calculates the size of the blocks in the maze
-    const maxNumBlocks = maxBlockSize / Math.min(rows, columns);
-    blockSize = Math.floor(maxNumBlocks / 5) * 5;
-    if ( blockSize < 20 ) { 
-        blockSize = minBlockSize; 
-    }
+    blockSize = Math.floor(Math.min(mazeCanvas.height / rows, mazeCanvas.width / columns) / 2) * 2;
+    if ( blockSize < 20 ) { blockSize = minBlockSize; }
     imageSize = Math.floor(blockSize * 0.8);
     let imageBuffer = Math.floor((blockSize - imageSize) / 2);
-    console.log("IMAGE SIZE: " + imageSize);
-    console.log("IMAGE BUFFER: " + imageBuffer);
-    console.log("BLOCK SIZE: " + blockSize);
 
     // This draws the maze on the canvas
     drawMaze(maze, rows, columns, context, blockSize);
@@ -196,19 +184,11 @@ sizeForm.addEventListener('submit', function (event) {
     arrowE = [0, rows - 1]; // The exact position of the player
     arrowP = [start[0], start[1]]; // The pixel position of the player
 
-    console.log("--------------------");
-    console.log("START: " + start);
-    console.log("STOP: " + end);
-    console.log("Arrow E: " + arrowE);
-    console.log("Arrow P: " + arrowP);
-
     // This draws the start and end positions on the canvas
     context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
     context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
 
     // This sets the player's position to the start of the maze
-    console.log("ROWS: " + rows);
-    console.log("COLS: " + columns);
     context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
 
     // This removes the event listener to avoid duplicates
@@ -297,12 +277,6 @@ function drawMaze(completedMaze, rows, columns, ct, blockSize) {
  */
 function movePlayer(key) {
     console.log("KEY EVENT");
- 
-    console.log("--------------------");
-    console.log("START: " + start);
-    console.log("STOP: " + end);
-    console.log("Arrow E: " + arrowE);
-    console.log("Arrow P: " + arrowP);
 
     // This clears the arrow and maybe the start or stop sign
     context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
