@@ -10,6 +10,7 @@
 </head>
 <body>
     <div id="completed_message">
+        <img id="gif_fireworks" src="/images/fireworks.gif" alt="Fireworks" />
         <div id="message">
             <h2>CONGRADULATIONS!</h2>
             <p>You finished the maze. Feel free to roam around the maze.</p>
@@ -20,9 +21,9 @@
     <div id="size_input" class="center">
         <form id="size_form">
             <label id="row_label" for="row_input">Rows: </label>
-            <input id="row_input" name="row" type="number" value="1" min="1">
+            <input id="row_input" name="row" type="number" value="1" min="1" required>
             <label id="col_label" for="col_input">Columns: </label>
-            <input id="col_input" name="col" type="number" value="1" min="1">
+            <input id="col_input" name="col" type="number" value="1" min="1" required>
             <input id="sub_input" type="submit" value="Generate Maze" />
         </form>
     </div>

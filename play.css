@@ -27,6 +27,10 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+#button_message:hover, #button_message:active {
+    color: var(--CSHRed);
+ }
+
 #play_title {
     min-width: 230px;
 }

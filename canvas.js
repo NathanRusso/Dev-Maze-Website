@@ -54,6 +54,11 @@ const imgArrowE = document.getElementById("img_arrow_e");
 const imgArrowS = document.getElementById("img_arrow_s");
 const imgArrowW = document.getElementById("img_arrow_w");
 
+// This is the fireworks GIF for when the player finishes the maze
+const gifFireworks = document.getElementById("gif_fireworks");
+gifFireworks.width = screenWidth;
+gifFireworks.height = screenHeight;
+
 /**
  * These values are declares early to handle removing an event listenener
  * maze - This will hold the 2d array for the maze
@@ -95,6 +100,10 @@ window.addEventListener('resize', function () {
     colInput.max = getMaxCol();
     rowInput.value = 1;
     colInput.value = 1;
+
+    // This streches the GIF to the entire screen
+    gifFireworks.width = screenWidth;
+    gifFireworks.height = screenHeight;
 });
 
 /**
@@ -155,6 +164,10 @@ sizeForm.addEventListener('submit', function (event) {
 
     // This clears the canvas of any previous maze
     context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
+    // This unselects the row and column inputs.
+    rowInput.blur();
+    colInput.blur();
 
     // This saves the row and column values from the input
     rows = rowInput.value;
