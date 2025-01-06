@@ -1,50 +1,14 @@
 // Exports the Maze class to be used in other files
 import { Maze } from "./maze.js";
 
-// The current available width and height of the screen
-let screenWidth = Math.min(window.innerWidth, screen.availWidth);
-let screenHeight = Math.min(window.innerHeight, screen.availHeight);
 
-// This saves the total height of the elements above the maze
-const playTitle = document.getElementById("play_title");
-const sizeInput = document.getElementById("size_input");
-let upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
+//------------------------------ CONSTANTS BELOW ------------------------------//
 
-// This is the current maze canvas, and sets its dimensions
-// The width and height of the maze canvas are multiples of 20
-const mazeCanvas = document.getElementById("maze_canvas");
-const context = mazeCanvas.getContext('2d');
-mazeCanvas.width = getMaxMazeWidth();
-mazeCanvas.height = getMaxMazeHeight();
 
-console.log(screenWidth);
-console.log(screenHeight);
-console.log(playTitle.clientHeight);
-console.log(sizeInput.clientHeight);
-console.log(upperHeight);
-console.log(mazeCanvas.width);
-console.log(mazeCanvas.height);
+// This the d-pad that can move the player
+const imgDPad = document.getElementById("img_d-pad");
 
-// This sets the mimumum block size
-let minBlockSize = 20;
-
-// These are the row and columns input elements
-// There maximum row and column values are set
-const rowInput = document.getElementById("row_input");
-const colInput = document.getElementById("col_input");
-rowInput.max = getMaxRow();
-colInput.max = getMaxCol();
-
-// This is the form that houses the row and column inputs
-const sizeForm = document.getElementById("size_form");
-
-// This holds which key presses are allowed for row and column inputs
-const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-    'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Enter'];
-
-let mazeSolved = false;
-
-// These are the signs to show where the start and end of the maze are.
+// These are the signs to show where the start and end of the maze are
 const imgStart = document.getElementById("img_start");
 const imgStop = document.getElementById("img_stop");
 
@@ -56,6 +20,64 @@ const imgArrowW = document.getElementById("img_arrow_w");
 
 // This is the fireworks GIF for when the player finishes the maze
 const gifFireworks = document.getElementById("gif_fireworks");
+
+// These are the objects for the completed maze message and button
+const completedMessage = document.getElementById("completed_message");
+const messageButton = document.getElementById("button_message");
+
+// This is the div that holds the d-pad and maze canvas
+const mazeDiv = document.getElementById("maze");
+
+// These are the elements above the maze, used for measurements
+const playTitle = document.getElementById("play_title");
+const sizeInput = document.getElementById("size_input");
+
+// This is the maze's canvas and its context
+const mazeCanvas = document.getElementById("maze_canvas");
+const context = mazeCanvas.getContext('2d');
+
+// This is the form that houses the row and column inputs
+const sizeForm = document.getElementById("size_form");
+
+// These are the row and columns input elements
+const rowInput = document.getElementById("row_input");
+const colInput = document.getElementById("col_input");
+
+// This holds which key presses are allowed for row and column inputs
+const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+    'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Enter'];
+
+
+//------------------------------ VARIABLES AND ACTIONS BELOW ------------------------------//
+
+
+// This sets current available width and height of the screen
+let screenWidth = Math.min(window.innerWidth, screen.availWidth);
+let screenHeight = Math.min(window.innerHeight, screen.availHeight);
+let screenHeightLimit = screenHeight - playTitle.clientHeight - sizeInput.clientHeight;
+
+// This sets the maze canvas's dimensions
+mazeCanvas.width = getMaxMazeWidth() * 0.8;
+mazeCanvas.height = getMaxMazeHeight() * 0.8;
+
+// This sets the width of the d-pad
+imgDPad.width = getMaxMazeWidth() * 0.2;
+imgDPad.height = getMaxMazeWidth() * 0.2;
+
+// This changes the orientation of the maze elements based on the screen ratio
+adjustMaze(mazeCanvas, imgDPad);
+
+// This sets the mimumum maze block size to 20 pixels
+let minBlockSize = 20;
+
+// This sets the maximum values the row and column inputs can be
+rowInput.max = getMaxRow();
+colInput.max = getMaxCol();
+
+// This sets the maze to being not completed
+let mazeSolved = false;
+
+// This sets the dimensions of the fireworks GIF to the screen's dimensions.
 gifFireworks.width = screenWidth;
 gifFireworks.height = screenHeight;
 
@@ -73,25 +95,27 @@ gifFireworks.height = screenHeight;
  */
 let maze, rows, columns, start, end, arrowE, arrowP, blockSize, imageSize;
 
-// These are the objects for the completed message and button
-const completedMessage = document.getElementById("completed_message");
-const messageButton = document.getElementById("button_message");
+console.log(screenWidth);
+console.log(screenHeight);
+console.log(screenHeightLimit);
+console.log(playTitle.clientHeight);
+console.log(sizeInput.clientHeight);
+console.log(mazeCanvas.width);
+console.log(mazeCanvas.height);
 
 
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
 
 
 // Store the anonymous function in a variable
-const keyUpHandler = (event) => {
-    movePlayer(event.key);
-};
+const keyUpHandler = (event) => { movePlayer(event.key); };
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
     // This updates the screen width and height and the upper height
     screenWidth = Math.min(window.innerWidth, screen.availWidth);
     screenHeight = Math.min(window.innerHeight, screen.availHeight);
-    upperHeight = playTitle.clientHeight + sizeInput.clientHeight;
+    screenHeightLimit = screenHeight - playTitle.clientHeight - sizeInput.clientHeight;
 
     // This updates the maze canvas width and height, its maximum row and column values, and more
     mazeCanvas.width = getMaxMazeWidth();
@@ -100,8 +124,9 @@ window.addEventListener('resize', function () {
     colInput.max = getMaxCol();
     rowInput.value = 1;
     colInput.value = 1;
+    adjustMaze(mazeCanvas, imgDPad);
 
-    // This streches the GIF to the entire screen
+    // This streches the firwork GIF to the entire screen
     gifFireworks.width = screenWidth;
     gifFireworks.height = screenHeight;
 });
@@ -227,7 +252,7 @@ messageButton.addEventListener('click', function () {
  * 
  * @returns the possible width of the maze canvas
  */
-function getMaxMazeWidth() { return Math.floor(screenWidth * 0.045) * 20; }
+function getMaxMazeWidth() { return Math.floor(screenWidth * 0.95 / 20) * 20; }
 
 /**
  * This finds the size of the maze canvas height based on the screen height.
@@ -235,7 +260,7 @@ function getMaxMazeWidth() { return Math.floor(screenWidth * 0.045) * 20; }
  * 
  * @returns the possible height of the maze canvas
  */
-function getMaxMazeHeight() { return Math.floor((screenHeight - upperHeight) * 0.045) * 20; }
+function getMaxMazeHeight() { return Math.floor(screenHeightLimit * 0.045) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,
@@ -248,6 +273,47 @@ function getMaxRow() { return mazeCanvas.height / minBlockSize; }
  *  given the current window size.
  */
 function getMaxCol() { return mazeCanvas.width / minBlockSize; }
+
+/**
+ * This changes the orientation and sizes of the maze elements.
+ * It switches between vertical and horizontal styles.
+ * 
+ * @param {*} canvas - The canvas for the maze
+ * @param {*} dPad - The d-pad to move the player
+ */
+function adjustMaze(canvas, dPad) {
+    if ( screenWidth >= screenHeight ) {
+        // This sets the maze canvas's dimensions
+        canvas.width = getMaxMazeWidth() * 0.8;
+        canvas.height = getMaxMazeHeight();
+
+        // This sets the width of the d-pad
+        dPad.width = getMaxMazeWidth() * 0.2;
+        dPad.height = getMaxMazeWidth() * 0.2;
+
+        // This adjust the orientation
+        mazeDiv.style.flexDirection = 'row'
+        canvas.style.marginRight = '5px';
+        dPad.style.marginLeft = '5px';
+        canvas.style.marginBottom = '0px';
+        dPad.style.marginTop = '0px';
+    } else {
+        // This sets the maze canvas's dimensions
+        canvas.width = getMaxMazeWidth();
+        canvas.height = getMaxMazeHeight() * 0.8;
+
+        // This sets the width of the d-pad
+        dPad.width = getMaxMazeHeight() * 0.2;
+        dPad.height = getMaxMazeHeight() * 0.2;
+
+        // This adjust the orientation
+        mazeDiv.style.flexDirection = 'column'
+        canvas.style.marginRight = '0px';
+        dPad.style.marginLeft = '0px';
+        canvas.style.marginBottom = '5px';
+        dPad.style.marginTop = '5px';
+    }
+}
 
 /**
  * This draws the givren maze on the canvas.
