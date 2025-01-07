@@ -47,6 +47,12 @@ const colInput = document.getElementById("col_input");
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Enter'];
 
+// This saves the areas on the d-pad the player can click
+const upPad = document.getElementById("up_pad");
+const downPad = document.getElementById("down_pad");
+const leftPad = document.getElementById("left_pad");
+const rightPad = document.getElementById("right_pad");
+
 
 //------------------------------ VARIABLES AND ACTIONS BELOW ------------------------------//
 
@@ -107,8 +113,14 @@ console.log(mazeCanvas.height);
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
 
 
-// Store the anonymous function in a variable
+// Anonymous function for keybaord input keys
 const keyUpHandler = (event) => { movePlayer(event.key); };
+
+// Anonymous functions for d-pad input 
+const clickHandlerUp = (event) => { movePlayer("ArrowUp"); };
+const clickHandlerDown = (event) => { movePlayer("ArrowDown"); };
+const clickHandlerLeft = (event) => { movePlayer("ArrowLeft"); };
+const clickHandlerRight = (event) => { movePlayer("ArrowRight"); };
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
@@ -230,11 +242,19 @@ sizeForm.addEventListener('submit', function (event) {
     // This sets the player's position to the start of the maze
     context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
 
-    // This removes the event listener to avoid duplicates
+    // This removes the event listeners to avoid duplicates
     document.removeEventListener("keyup", keyUpHandler);
+    upPad.removeEventListener("click", clickHandlerUp);
+    downPad.removeEventListener("click", clickHandlerDown);
+    leftPad.removeEventListener("click", clickHandlerLeft);
+    rightPad.removeEventListener("click", clickHandlerRight)
 
     // This moves the player based on input
     document.addEventListener("keyup", keyUpHandler);
+    upPad.addEventListener("click", clickHandlerUp);
+    downPad.addEventListener("click", clickHandlerDown);
+    leftPad.addEventListener("click", clickHandlerLeft);
+    rightPad.addEventListener("click", clickHandlerRight);
 });
 
 // This removes the completed message

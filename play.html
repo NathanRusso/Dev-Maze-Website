@@ -34,10 +34,10 @@
         <div id="d_pad">
             <img id="img_d-pad" src="images/d-pad.png" alt="D-pad" usemap="#d_map">
             <map name="d_map">
-                <area id="up_pad" shape="rect" coords="200,0,400,200" alt="Up" title="Up" onclick="moveUp()">
-                <area id="down_pad" shape="rect" coords="200,400,400,600" alt="Down" title="Down" onclick="moveDown()">
-                <area id="left_pad" shape="rect" coords="0,200,200,400" alt="Left" title="Left" onclick="moveLeft()">
-                <area id="right_pad" shape="rect" coords="400,200,600,400" alt="Rigt" title="Right" onclick="moveRight()">
+                <area id="up_pad" shape="rect" coords="200,0,400,200" alt="Up" title="Up">
+                <area id="down_pad" shape="rect" coords="200,400,400,600" alt="Down" title="Down">
+                <area id="left_pad" shape="rect" coords="0,200,200,400" alt="Left" title="Left">
+                <area id="right_pad" shape="rect" coords="400,200,600,400" alt="Rigt" title="Right">
             </map>
         </div>
     </div>
@@ -52,18 +52,6 @@
     <script src="resizer.min.js"></script>
     <script>
         imageMapResize();
-        function moveUp() {
-            console.log("UP");
-        }
-        function moveDown() {
-            console.log("DOWN");
-        }
-        function moveLeft() {
-            console.log("LEFT");
-        }
-        function moveRight() {
-            console.log("RIGHT");
-        }
     </script>
 </body>
 </html>
