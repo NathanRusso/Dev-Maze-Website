@@ -21,9 +21,9 @@ const imgArrowW = document.getElementById("img_arrow_w");
 // This is the fireworks GIF for when the player finishes the maze
 const gifFireworks = document.getElementById("gif_fireworks");
 
-// These are the objects for the completed maze message and button
-const completedMessage = document.getElementById("completed_message");
-const messageButton = document.getElementById("button_message");
+// These are the objects for the completed maze screen and button
+const completedScreen = document.getElementById("completed_screen");
+const completedButton = document.getElementById("completed_button");
 
 // This is the div that holds the d-pad and maze canvas
 const mazeDiv = document.getElementById("maze");
@@ -238,8 +238,8 @@ sizeForm.addEventListener('submit', function (event) {
 });
 
 // This removes the completed message
-messageButton.addEventListener('click', function () {
-    completedMessage.style.display = 'none';
+completedButton.addEventListener('click', function () {
+    completedScreen.style.display = 'none';
 });
 
 
@@ -420,6 +420,6 @@ function movePlayer(key) {
     // The player has reached the end of the maze.
     if ( mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1] ) {
         mazeSolved = true;
-        completedMessage.style.display = 'block';
+        completedScreen.style.display = 'block';
     }
 }

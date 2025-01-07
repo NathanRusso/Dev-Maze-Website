@@ -9,12 +9,12 @@
     <script type="module" src="canvas.js"></script>
 </head>
 <body>
-    <div id="completed_message">
+    <div id="completed_screen">
         <img id="gif_fireworks" src="/images/fireworks.gif" alt="Fireworks" />
-        <div id="message">
+        <div id="completed_message">
             <h2>CONGRADULATIONS!</h2>
             <p>You finished the maze. Feel free to roam around the maze.</p>
-            <input id="button_message" type="button" value="Click to continue!" />
+            <input id="completed_button" type="button" value="Click to continue!" />
         </div>
     </div>
     <h1 id="play_title">Play Dev-Maze</h1>
@@ -32,7 +32,13 @@
             <!-- Maze goes here | The top minimum is either 230 x 110 pixels or 200 x 145 pixels -->
         </canvas>
         <div id="d_pad">
-            <img id="img_d-pad" src="images/d-pad.png" alt="D-pad">
+            <img id="img_d-pad" src="images/d-pad.png" alt="D-pad" usemap="#d_map">
+            <map name="d_map">
+                <area id="up_pad" shape="rect" coords="200,0,400,200" alt="Up" title="Up" onclick="moveUp()">
+                <area id="down_pad" shape="rect" coords="200,400,400,600" alt="Down" title="Down" onclick="moveDown()">
+                <area id="left_pad" shape="rect" coords="0,200,200,400" alt="Left" title="Left" onclick="moveLeft()">
+                <area id="right_pad" shape="rect" coords="400,200,600,400" alt="Rigt" title="Right" onclick="moveRight()">
+            </map>
         </div>
     </div>
     <div id="hidden_images">
@@ -43,5 +49,21 @@
         <img id="img_arrow_s" src="images/arrow_south.png" alt="South Arrow" />
         <img id="img_arrow_w" src="images/arrow_west.png" alt="West Arrow" />
     <div>
+    <script src="resizer.min.js"></script>
+    <script>
+        imageMapResize();
+        function moveUp() {
+            console.log("UP");
+        }
+        function moveDown() {
+            console.log("DOWN");
+        }
+        function moveLeft() {
+            console.log("LEFT");
+        }
+        function moveRight() {
+            console.log("RIGHT");
+        }
+    </script>
 </body>
 </html>
