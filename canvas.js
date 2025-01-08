@@ -18,9 +18,6 @@ const imgArrowE = document.getElementById("img_arrow_e");
 const imgArrowS = document.getElementById("img_arrow_s");
 const imgArrowW = document.getElementById("img_arrow_w");
 
-// This is the fireworks GIF for when the player finishes the maze
-const gifFireworks = document.getElementById("gif_fireworks");
-
 // These are the objects for the completed maze screen and button
 const completedScreen = document.getElementById("completed_screen");
 const completedButton = document.getElementById("completed_button");
@@ -83,10 +80,6 @@ colInput.max = getMaxCol();
 // This sets the maze to being not completed
 let mazeSolved = false;
 
-// This sets the dimensions of the fireworks GIF to the screen's dimensions.
-gifFireworks.width = screenWidth;
-gifFireworks.height = screenHeight;
-
 /**
  * These values are declares early to handle removing an event listenener
  * maze - This will hold the 2d array for the maze
@@ -117,10 +110,10 @@ console.log(mazeCanvas.height);
 const keyUpHandler = (event) => { movePlayer(event.key); };
 
 // Anonymous functions for d-pad input 
-const clickHandlerUp = (event) => { movePlayer("ArrowUp"); };
-const clickHandlerDown = (event) => { movePlayer("ArrowDown"); };
-const clickHandlerLeft = (event) => { movePlayer("ArrowLeft"); };
-const clickHandlerRight = (event) => { movePlayer("ArrowRight"); };
+const clickHandlerUp = () => { movePlayer("ArrowUp"); };
+const clickHandlerDown = () => { movePlayer("ArrowDown"); };
+const clickHandlerLeft = () => { movePlayer("ArrowLeft"); };
+const clickHandlerRight = () => { movePlayer("ArrowRight"); };
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
@@ -137,10 +130,6 @@ window.addEventListener('resize', function () {
     rowInput.value = 1;
     colInput.value = 1;
     adjustMaze(mazeCanvas, imgDPad);
-
-    // This streches the firwork GIF to the entire screen
-    gifFireworks.width = screenWidth;
-    gifFireworks.height = screenHeight;
 });
 
 /**
@@ -280,7 +269,7 @@ function getMaxMazeWidth() { return Math.floor(screenWidth * 0.95 / 20) * 20; }
  * 
  * @returns the possible height of the maze canvas
  */
-function getMaxMazeHeight() { return Math.floor(screenHeightLimit * 0.045) * 20; }
+function getMaxMazeHeight() { return Math.floor(screenHeightLimit * 0.90 / 20) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,

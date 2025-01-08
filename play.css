@@ -2,13 +2,18 @@
     display: none;
     position: fixed;
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
     z-index: 1;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
     background-color: rgba(176, 25, 126, .90);
+}
+
+#gif_fireworks {
+    width: 100vw;
+    height: 100vh;
 }
 
 #completed_message {
@@ -38,6 +43,7 @@
 #size_input {
     display: none;
     padding-bottom: 20px;
+    text-align: center;
 }
 
 #row_input {
@@ -56,7 +62,22 @@
     margin-left: 5px;
 }
 
-@media screen and (min-width: 250px) {
+@media screen and (max-width: 363px) {
+    #size_input {
+        padding-bottom: 10px;
+    }
+
+    #row_label {
+        margin-left: 5px;
+    }
+    
+    #sub_input {
+        margin-left: 0px;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (min-width: 255px) {
     #size_input {
         display: block;
     }
@@ -71,19 +92,9 @@
     align-content: stretch;
 }
 
-@media screen and (max-width: 500px) {
-    #maze {
-        /*flex-direction: column;*/
-    }
-}
-
 #maze_canvas {
     border: 2px solid black;
     border-block-color: black;
-}
-
-#d_pad {
-    
 }
 
 #hidden_images {
