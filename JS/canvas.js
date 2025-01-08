@@ -110,10 +110,15 @@ console.log(mazeCanvas.height);*/
 const keyUpHandler = (event) => { movePlayer(event.key); };
 
 // Anonymous functions for d-pad input 
-const clickHandlerUp = () => { movePlayer("ArrowUp"); };
-const clickHandlerDown = () => { movePlayer("ArrowDown"); };
-const clickHandlerLeft = () => { movePlayer("ArrowLeft"); };
-const clickHandlerRight = () => { movePlayer("ArrowRight"); };
+const clickHandlerUp = (event) => { console.log("UP"); movePlayer("ArrowUp"); };
+const clickHandlerDown = () => { console.log("DOWN"); movePlayer("ArrowDown"); };
+const clickHandlerLeft = () => { console.log("LEFT"); movePlayer("ArrowLeft"); };
+const clickHandlerRight = () => { console.log("RIGHT"); movePlayer("ArrowRight"); };
+
+// Ensure imageMapResize is called after the page has loaded
+window.addEventListener("load", function() {
+    imageMapResize();
+});
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
