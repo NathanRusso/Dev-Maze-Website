@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Play Dev-Maze</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="play.css" />
-    <script type="module" src="canvas.js"></script>
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <link rel="stylesheet" href="/CSS/play.css" />
+    <script type="module" src="/JS/canvas.js"></script>
 </head>
 <body>
     <div id="completed_screen">
-        <img id="gif_fireworks" src="/images/fireworks.gif" alt="Fireworks" />
+        <img id="gif_fireworks" src="/Images/fireworks.gif" alt="Fireworks" />
         <div id="completed_message">
             <h2>CONGRADULATIONS!</h2>
             <p>You finished the maze. Feel free to roam around the maze.</p>
@@ -30,7 +30,7 @@
     <div id="maze" class="center">
         <canvas id="maze_canvas"></canvas>
         <div id="d_pad">
-            <img id="img_d-pad" src="images/d-pad.png" alt="D-pad" usemap="#d_map">
+            <img id="img_d-pad" src="/Images/d-pad.png" alt="D-pad" usemap="#d_map">
             <map name="d_map">
                 <area id="up_pad" shape="rect" coords="200,0,400,200" alt="Up" title="Up">
                 <area id="down_pad" shape="rect" coords="200,400,400,600" alt="Down" title="Down">
@@ -40,14 +40,14 @@
         </div>
     </div>
     <div id="hidden_images">
-        <img id="img_start" src="images/start.png" alt="Start" />
-        <img id="img_stop" src="images/stop.png" alt="Stop" />
-        <img id="img_arrow_n" src="images/arrow_north.png" alt="North Arrow" />
-        <img id="img_arrow_e" src="images/arrow_east.png" alt="East Arrow" />
-        <img id="img_arrow_s" src="images/arrow_south.png" alt="South Arrow" />
-        <img id="img_arrow_w" src="images/arrow_west.png" alt="West Arrow" />
+        <img id="img_start" src="/Images/start.png" alt="Start" />
+        <img id="img_stop" src="/Images/stop.png" alt="Stop" />
+        <img id="img_arrow_n" src="/Images/arrow_north.png" alt="North Arrow" />
+        <img id="img_arrow_e" src="/Images/arrow_east.png" alt="East Arrow" />
+        <img id="img_arrow_s" src="/Images/arrow_south.png" alt="South Arrow" />
+        <img id="img_arrow_w" src="/Images/arrow_west.png" alt="West Arrow" />
     <div>
-    <script src="resizer.min.js"></script>
+    <script src="/JS/resizer.min.js"></script>
     <script>
         imageMapResize();
     </script>

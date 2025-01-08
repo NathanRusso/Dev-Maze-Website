@@ -1,5 +1,5 @@
 // Exports the Maze class to be used in other files
-import { Maze } from "./maze.js";
+import { Maze } from "/JS/maze.js";
 
 
 //------------------------------ CONSTANTS BELOW ------------------------------//
@@ -22,16 +22,9 @@ const imgArrowW = document.getElementById("img_arrow_w");
 const completedScreen = document.getElementById("completed_screen");
 const completedButton = document.getElementById("completed_button");
 
-// This is the div that holds the d-pad and maze canvas
-const mazeDiv = document.getElementById("maze");
-
 // These are the elements above the maze, used for measurements
 const playTitle = document.getElementById("play_title");
 const sizeInput = document.getElementById("size_input");
-
-// This is the maze's canvas and its context
-const mazeCanvas = document.getElementById("maze_canvas");
-const context = mazeCanvas.getContext('2d');
 
 // This is the form that houses the row and column inputs
 const sizeForm = document.getElementById("size_form");
@@ -39,6 +32,13 @@ const sizeForm = document.getElementById("size_form");
 // These are the row and columns input elements
 const rowInput = document.getElementById("row_input");
 const colInput = document.getElementById("col_input");
+
+// This is the div that holds the d-pad and maze canvas
+const mazeDiv = document.getElementById("maze");
+
+// This is the maze's canvas and its context
+const mazeCanvas = document.getElementById("maze_canvas");
+const context = mazeCanvas.getContext('2d');
 
 // This holds which key presses are allowed for row and column inputs
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
@@ -94,13 +94,13 @@ let mazeSolved = false;
  */
 let maze, rows, columns, start, end, arrowE, arrowP, blockSize, imageSize;
 
-console.log(screenWidth);
+/*console.log(screenWidth);
 console.log(screenHeight);
 console.log(screenHeightLimit);
 console.log(playTitle.clientHeight);
 console.log(sizeInput.clientHeight);
 console.log(mazeCanvas.width);
-console.log(mazeCanvas.height);
+console.log(mazeCanvas.height);*/
 
 
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
