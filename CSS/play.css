@@ -97,6 +97,14 @@
     border-block-color: black;
 }
 
+#img_d-pad {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 #hidden_images {
     display: none;
 }
