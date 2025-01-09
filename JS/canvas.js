@@ -70,7 +70,7 @@ imgDPad.height = getMaxMazeWidth() * 0.2;
 // This changes the orientation of the maze elements based on the screen ratio
 adjustMaze(mazeCanvas, imgDPad);
 
-// This sets the mimumum maze block size to 20 pixels
+// This sets the minimum maze block size to 20 pixels
 let minBlockSize = 20;
 
 // This sets the maximum values the row and column inputs can be
@@ -81,7 +81,7 @@ colInput.max = getMaxCol();
 let mazeSolved = false;
 
 /**
- * These values are declares early to handle removing an event listenener
+ * These values are declared early to handle removing an event listener
  * maze - This will hold the 2d array for the maze
  * rows - This will hold the number of rows in the maze
  * columns - This will hold the number of columns in the maze.
@@ -106,7 +106,7 @@ console.log(mazeCanvas.height);*/
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
 
 
-// Anonymous function for keybaord input keys
+// Anonymous function for keyboard input keys
 const keyUpHandler = (event) => { movePlayer(event.key); };
 
 // Anonymous functions for d-pad input 
@@ -330,7 +330,7 @@ function adjustMaze(canvas, dPad) {
 }
 
 /**
- * This draws the givren maze on the canvas.
+ * This draws the given maze on the canvas.
  * 
  * @param {*} completedMaze - The 2d array of blocks that make up the maze.
  * @param {*} rows - The number of rows in the maze.
@@ -370,7 +370,7 @@ function drawMaze(completedMaze, rows, columns, ct, blockSize, widthBuffer) {
 }
 
 /**
- * This moves the player in the cnavas maze.
+ * This moves the player in the canvas maze.
  * 
  * @param {*} key - The event's key when triggered
  */

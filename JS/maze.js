@@ -3,7 +3,7 @@
  */
 class Block {
     /**
-     * This creates a new block with the given corrdinates.
+     * This creates a new block with the given coordinates.
      * 
      * @param {Number} xIndex - The x coordinate in the maze
      * @param {Number} yIndex - The y coordinates in the maze
@@ -62,7 +62,7 @@ export class Maze {
 
     /**
      * This finds the index of a given point in a 2d array.
-     * -1 means it doesnt exist in the array.
+     * -1 means it does not exist in the array.
      * 
      * @param {any} array - the 2d array to search through
      * @param {any} point - the point to find in the array
@@ -113,13 +113,13 @@ export class Maze {
      * @param {Array} visited - the array of visited points
      */
     #removeLoop(next, visited) {
-        // This saves the initial length of visisted
+        // This saves the initial length of visited
         let length = visited.length;
 
         // This saves the index of the point after the duplicate
         let after = this.#indexIn2dArray(visited, next) + 1;
 
-        // This restes all blocks after the duplicate
+        // This resets all blocks after the duplicate
         for (let i = after; i < visited.length; i++) {
             this.#getBlockAt(visited[i]).reset();
         }
@@ -161,7 +161,7 @@ export class Maze {
                     nextBlock.southWall = false;
 
                     if (nextBlock.inTheMaze == false) {
-                        // This saves the next blocks as visisted
+                        // This saves the next blocks as visited
                         nextBlock.visited = true;
                         visited.push(next);
                     }
@@ -185,7 +185,7 @@ export class Maze {
                     nextBlock.westWall = false;
 
                     if (nextBlock.inTheMaze == false) {
-                        // This saves the next blocks as visisted
+                        // This saves the next blocks as visited
                         nextBlock.visited = true;
                         visited.push(next);
                     }
@@ -210,7 +210,7 @@ export class Maze {
                     nextBlock.northWall = false;
 
                     if (nextBlock.inTheMaze == false) {
-                        // This saves the next blocks as visisted
+                        // This saves the next blocks as visited
                         nextBlock.visited = true;
                         visited.push(next);
                     }
@@ -235,7 +235,7 @@ export class Maze {
                     nextBlock.eastWall = false;
 
                     if (nextBlock.inTheMaze == false) {
-                        // This saves the next blocks as visisted
+                        // This saves the next blocks as visited
                         nextBlock.visited = true;
                         visited.push(next);
                     }
@@ -252,7 +252,7 @@ export class Maze {
      * This generates the maze using a variation of Wilson's Maze Algorithm.
      */
     generateMaze() {
-        // Returns a random integer from 0 to the number of avaliable points - 1
+        // Returns a random integer from 0 to the number of available points - 1
         let firstIndex = Math.floor(Math.random() * this.#availablePoints.length);
 
         // This gets the first point to start the maze generation
@@ -278,7 +278,7 @@ export class Maze {
             // This creates a new path of points for the maze
             this.#generatePath(startPoint, visitedPoints);
 
-            // This adds all of the visisted points to the maze
+            // This adds all of the visited points to the maze
             // It then removes the points from the available points
             let length = visitedPoints.length;
 
