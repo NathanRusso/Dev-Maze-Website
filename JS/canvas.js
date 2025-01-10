@@ -57,21 +57,14 @@ const rightPad = document.getElementById("right_pad");
 // This sets current available width and height of the screen
 let screenWidth = Math.min(window.innerWidth, screen.availWidth);
 let screenHeight = Math.min(window.innerHeight, screen.availHeight);
-let screenHeightLimit = screenHeight - playTitle.clientHeight - sizeInput.clientHeight;
-
-// This sets the maze canvas's dimensions
-mazeCanvas.width = getMaxMazeWidth() * 0.8;
-mazeCanvas.height = getMaxMazeHeight() * 0.8;
-
-// This sets the width of the d-pad
-imgDPad.width = getMaxMazeWidth() * 0.2;
-imgDPad.height = getMaxMazeWidth() * 0.2;
-
-// This changes the orientation of the maze elements based on the screen ratio
-adjustMaze(mazeCanvas, imgDPad);
+let screenHeightLimit = screenHeight - playTitle.offsetHeight - sizeInput.offsetHeight;
 
 // This sets the minimum maze block size to 20 pixels
 let minBlockSize = 20;
+
+// This sets the maze canvas's and d-pad's dimensions
+// This changes the orientation of those elements based on the screen ratio
+adjustMaze(mazeCanvas, imgDPad);
 
 // This sets the maximum values the row and column inputs can be
 rowInput.max = getMaxRow();
@@ -93,14 +86,6 @@ let mazeSolved = false;
  * imageSize - Ths will hold the size of the images in the maze
  */
 let maze, rows, columns, start, end, arrowE, arrowP, blockSize, imageSize;
-
-/*console.log(screenWidth);
-console.log(screenHeight);
-console.log(screenHeightLimit);
-console.log(playTitle.clientHeight);
-console.log(sizeInput.clientHeight);
-console.log(mazeCanvas.width);
-console.log(mazeCanvas.height);*/
 
 
 //------------------------------ EVENT LISTENERS BELOW ------------------------------//
@@ -127,14 +112,16 @@ window.addEventListener('resize', function () {
     screenHeight = Math.min(window.innerHeight, screen.availHeight);
     screenHeightLimit = screenHeight - playTitle.clientHeight - sizeInput.clientHeight;
 
-    // This updates the maze canvas width and height, its maximum row and column values, and more
-    mazeCanvas.width = getMaxMazeWidth();
-    mazeCanvas.height = getMaxMazeHeight();
+    // This updates the maze canvas's and d-pad's dimensions
+    // This updates the orientation of those elements based on the screen ratio
+    adjustMaze(mazeCanvas, imgDPad);
+
+    // This updates the maximum values for the row and column inputs.
+    // It also resets their values
     rowInput.max = getMaxRow();
     colInput.max = getMaxCol();
     rowInput.value = 1;
     colInput.value = 1;
-    adjustMaze(mazeCanvas, imgDPad);
 });
 
 /**
@@ -261,20 +248,22 @@ completedButton.addEventListener('click', function () {
 
 
 /**
- * This finds the size of the maze canvas width based on the screen width.
+ * This finds the size of the maze canvas width based on the screen width and limiter.
  * The canvas width is a multiple of 20.
  * 
+ * @param {*} limiter - Decimal to restrict size for d-pad
  * @returns the possible width of the maze canvas
  */
-function getMaxMazeWidth() { return Math.floor(screenWidth * 0.95 / 20) * 20; }
+function getMaxMazeWidth(limiter) { return Math.floor(screenWidth * 0.95 * limiter / 20) * 20; }
 
 /**
- * This finds the size of the maze canvas height based on the screen height.
+ * This finds the size of the maze canvas height based on the screen height and limiter.
  * The canvas height is a multiple of 20.
  * 
+ * @param {*} limiter - Decimal to restrict size for d-pad
  * @returns the possible height of the maze canvas
  */
-function getMaxMazeHeight() { return Math.floor(screenHeightLimit * 0.90 / 20) * 20; }
+function getMaxMazeHeight(limiter) { return Math.floor(screenHeightLimit * 0.90 * limiter / 20) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,
@@ -289,7 +278,8 @@ function getMaxRow() { return mazeCanvas.height / minBlockSize; }
 function getMaxCol() { return mazeCanvas.width / minBlockSize; }
 
 /**
- * This changes the orientation and sizes of the maze elements.
+ * This sets the dimensions of the maze canvas and the d-pad.
+ * It also adjust the orientation of those elements.
  * It switches between vertical and horizontal styles.
  * 
  * @param {*} canvas - The canvas for the maze
@@ -298,30 +288,30 @@ function getMaxCol() { return mazeCanvas.width / minBlockSize; }
 function adjustMaze(canvas, dPad) {
     if ( screenWidth >= screenHeight ) {
         // This sets the maze canvas's dimensions
-        canvas.width = getMaxMazeWidth() * 0.8;
-        canvas.height = getMaxMazeHeight();
+        canvas.width = getMaxMazeWidth(0.8);
+        canvas.height = getMaxMazeHeight(1.0);
 
         // This sets the width of the d-pad
-        dPad.width = getMaxMazeWidth() * 0.2;
-        dPad.height = getMaxMazeWidth() * 0.2;
+        dPad.width = getMaxMazeWidth(0.2);
+        dPad.height = getMaxMazeWidth(0.2);
 
         // This adjust the orientation
-        mazeDiv.style.flexDirection = 'row'
+        mazeDiv.style.flexDirection = 'row';
         canvas.style.marginRight = '5px';
         dPad.style.marginLeft = '5px';
         canvas.style.marginBottom = '0px';
         dPad.style.marginTop = '0px';
     } else {
         // This sets the maze canvas's dimensions
-        canvas.width = getMaxMazeWidth();
-        canvas.height = getMaxMazeHeight() * 0.8;
+        canvas.width = getMaxMazeWidth(1.0);
+        canvas.height = getMaxMazeHeight(0.8);
 
         // This sets the width of the d-pad
-        dPad.width = getMaxMazeHeight() * 0.2;
-        dPad.height = getMaxMazeHeight() * 0.2;
+        dPad.width = getMaxMazeHeight(0.2);
+        dPad.height = getMaxMazeHeight(0.2);;
 
         // This adjust the orientation
-        mazeDiv.style.flexDirection = 'column'
+        mazeDiv.style.flexDirection = 'column';
         canvas.style.marginRight = '0px';
         dPad.style.marginLeft = '0px';
         canvas.style.marginBottom = '5px';
