@@ -107,15 +107,8 @@ window.addEventListener("load", function() {
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
-    // This clears the canvas of any previous maze
-    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-
-    // This removes the event listeners to avoid duplicates
-    document.removeEventListener("keyup", keyUpHandler);
-    upPad.removeEventListener("click", clickHandlerUp);
-    downPad.removeEventListener("click", clickHandlerDown);
-    leftPad.removeEventListener("click", clickHandlerLeft);
-    rightPad.removeEventListener("click", clickHandlerRight);
+    // This resets the variables for the maze to avoid unwanted behavior
+    resetMazeVariables();
 
     // This updates the screen width and height and the upper height
     screenWidth = Math.min(window.innerWidth, screen.availWidth);
@@ -187,15 +180,8 @@ sizeForm.addEventListener('submit', function (event) {
     // This prevents the form from refreshing the page
     event.preventDefault();
 
-    // This sets the maze being solved to false
-    mazeSolved = false;
-
-    // This clears the canvas of any previous maze
-    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-
-    // This unselects the row and column inputs.
-    rowInput.blur();
-    colInput.blur();
+    // This resets the variables for the maze to avoid unwanted behavior
+    resetMazeVariables();
 
     // This saves the row and column values from the input
     rows = rowInput.value;
@@ -232,13 +218,6 @@ sizeForm.addEventListener('submit', function (event) {
 
     // This sets the player's position to the start of the maze
     context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
-
-    // This removes the event listeners to avoid duplicates
-    document.removeEventListener("keyup", keyUpHandler);
-    upPad.removeEventListener("click", clickHandlerUp);
-    downPad.removeEventListener("click", clickHandlerDown);
-    leftPad.removeEventListener("click", clickHandlerLeft);
-    rightPad.removeEventListener("click", clickHandlerRight);
 
     // This moves the player based on input
     document.addEventListener("keyup", keyUpHandler);
@@ -375,9 +354,6 @@ function drawMaze(completedMaze, rows, columns, ct, blockSize, widthBuffer) {
  * @param {*} key - The event's key when triggered
  */
 function movePlayer(key) {
-    console.log("movePlayer: " + key);
-
-
     // This clears the arrow and maybe the start or stop sign
     context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
 
@@ -439,4 +415,28 @@ function movePlayer(key) {
         mazeSolved = true;
         completedScreen.style.display = 'block';
     }
+}
+
+/**
+ * This resets the variables for the maze during submits or resizing.
+ * The maze is no longer solves and the canvas is cleared.
+ * The row and column inputs are unselected and movement listeners are removed.
+ */
+function resetMazeVariables() {
+    // This sets the maze being solved to false
+    mazeSolved = false;
+
+    // This clears the canvas of any previous maze
+    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
+    // This unselects the row and column inputs.
+    rowInput.blur();
+    colInput.blur();
+
+    // This removes the event listeners to avoid duplicates
+    document.removeEventListener("keyup", keyUpHandler);
+    upPad.removeEventListener("click", clickHandlerUp);
+    downPad.removeEventListener("click", clickHandlerDown);
+    leftPad.removeEventListener("click", clickHandlerLeft);
+    rightPad.removeEventListener("click", clickHandlerRight);
 }
