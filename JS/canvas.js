@@ -107,6 +107,16 @@ window.addEventListener("load", function() {
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
+    // This clears the canvas of any previous maze
+    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
+    // This removes the event listeners to avoid duplicates
+    document.removeEventListener("keyup", keyUpHandler);
+    upPad.removeEventListener("click", clickHandlerUp);
+    downPad.removeEventListener("click", clickHandlerDown);
+    leftPad.removeEventListener("click", clickHandlerLeft);
+    rightPad.removeEventListener("click", clickHandlerRight);
+
     // This updates the screen width and height and the upper height
     screenWidth = Math.min(window.innerWidth, screen.availWidth);
     screenHeight = Math.min(window.innerHeight, screen.availHeight);
@@ -228,7 +238,7 @@ sizeForm.addEventListener('submit', function (event) {
     upPad.removeEventListener("click", clickHandlerUp);
     downPad.removeEventListener("click", clickHandlerDown);
     leftPad.removeEventListener("click", clickHandlerLeft);
-    rightPad.removeEventListener("click", clickHandlerRight)
+    rightPad.removeEventListener("click", clickHandlerRight);
 
     // This moves the player based on input
     document.addEventListener("keyup", keyUpHandler);
@@ -365,6 +375,9 @@ function drawMaze(completedMaze, rows, columns, ct, blockSize, widthBuffer) {
  * @param {*} key - The event's key when triggered
  */
 function movePlayer(key) {
+    console.log("movePlayer: " + key);
+
+
     // This clears the arrow and maybe the start or stop sign
     context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
 
