@@ -44,6 +44,9 @@ const context = mazeCanvas.getContext('2d');
 const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     'Backspace', 'Delete', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Enter'];
 
+// This holds the allowed movement key strings
+const allowedMovement = new Set(["ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "W", "w", "A", "a", "S", "s", "D", "d"]);
+
 // This saves the areas on the d-pad the player can click
 const upPad = document.getElementById("up_pad");
 const downPad = document.getElementById("down_pad");
@@ -55,9 +58,14 @@ const rightPad = document.getElementById("right_pad");
 
 
 // This sets current available width and height of the screen
-let screenWidth = Math.min(window.innerWidth, screen.availWidth);
-let screenHeight = Math.min(window.innerHeight, screen.availHeight);
+let screenWidth = Math.min(document.documentElement.clientWidth, window.innerWidth, screen.availWidth);
+let screenHeight = Math.min(document.documentElement.clientHeight, window.innerHeight, screen.availHeight);
 let screenHeightLimit = screenHeight - playTitle.offsetHeight - sizeInput.offsetHeight;
+
+
+logDim();
+
+
 
 // This sets the minimum maze block size to 20 pixels
 let minBlockSize = 20;
@@ -107,12 +115,17 @@ window.addEventListener("load", function() {
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
+    console.log("Resizing...");
+    logDim();
+
+
+
     // This resets the variables for the maze to avoid unwanted behavior
     resetMazeVariables();
 
     // This updates the screen width and height and the upper height
-    screenWidth = Math.min(window.innerWidth, screen.availWidth);
-    screenHeight = Math.min(window.innerHeight, screen.availHeight);
+    screenWidth = Math.min(document.documentElement.clientWidth, window.innerWidth, screen.availWidth);
+    screenHeight = Math.min(document.documentElement.clientHeight, window.innerHeight, screen.availHeight);
     screenHeightLimit = screenHeight - playTitle.clientHeight - sizeInput.clientHeight;
 
     // This updates the maze canvas's and d-pad's dimensions
@@ -309,6 +322,30 @@ function adjustMaze(canvas, dPad) {
 }
 
 /**
+ * This resets the variables for the maze during submits or resizing.
+ * The maze is no longer solves and the canvas is cleared.
+ * The row and column inputs are unselected and movement listeners are removed.
+ */
+function resetMazeVariables() {
+    // This sets the maze being solved to false
+    mazeSolved = false;
+
+    // This clears the canvas of any previous maze
+    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
+    // This unselects the row and column inputs.
+    rowInput.blur();
+    colInput.blur();
+
+    // This removes the event listeners to avoid duplicates
+    document.removeEventListener("keyup", keyUpHandler);
+    upPad.removeEventListener("click", clickHandlerUp);
+    downPad.removeEventListener("click", clickHandlerDown);
+    leftPad.removeEventListener("click", clickHandlerLeft);
+    rightPad.removeEventListener("click", clickHandlerRight);
+}
+
+/**
  * This draws the given maze on the canvas.
  * 
  * @param {*} completedMaze - The 2d array of blocks that make up the maze.
@@ -350,93 +387,81 @@ function drawMaze(completedMaze, rows, columns, ct, blockSize, widthBuffer) {
 
 /**
  * This moves the player in the canvas maze.
+ * This only happens when the movement key is allowed.
  * 
  * @param {*} key - The event's key when triggered
  */
 function movePlayer(key) {
-    // This clears the arrow and maybe the start or stop sign
-    context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
+    if ( allowedMovement.has(key)) {
+        // This clears the arrow and maybe the start or stop sign
+        context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
 
-    // This redraws the start or stop sign if the player is on it
-    if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
-        context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
-    } else if ( arrowP[0] == start[0] && arrowP[1] == start[1] ) {
-        context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
-    }
+        // This redraws the start or stop sign if the player is on it
+        if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+            context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
+        } else if ( arrowP[0] == start[0] && arrowP[1] == start[1] ) {
+            context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
+        }
 
-    // This redraws the player where needed
-    switch (key) {
-        case "ArrowUp":
-        case "W":
-        case "w":
-            if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
-                && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
-                arrowE[1]--;
-                arrowP[1] -= blockSize;
-            }
-            context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
+        // This redraws the player where needed
+        switch (key) {
+            case "ArrowUp":
+            case "W":
+            case "w":
+                if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
+                    && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
+                    arrowE[1]--;
+                    arrowP[1] -= blockSize;
+                }
+                context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
             break;
-        case "ArrowRight":
-        case "D":
-        case "d":
-            if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
-                && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
-                arrowE[0]++;
-                arrowP[0] += blockSize;
-            }
-            context.drawImage(imgArrowE, arrowP[0], arrowP[1], imageSize, imageSize);
-            break;
-        case "ArrowDown":
-        case "S":
-        case "s":
-            if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
-                && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
-                arrowE[1]++;
-                arrowP[1] += blockSize;
-            }
-            context.drawImage(imgArrowS, arrowP[0], arrowP[1], imageSize, imageSize);
-            break;
-        case "ArrowLeft":
-        case "A":
-        case "a":
-            if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
-                && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
-                arrowE[0]--;
-                arrowP[0] -= blockSize;
-            }
-            context.drawImage(imgArrowW, arrowP[0], arrowP[1], imageSize, imageSize);
-            break;
-        default:
-            context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
-    }
+            case "ArrowRight":
+            case "D":
+            case "d":
+                if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
+                    && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
+                    arrowE[0]++;
+                    arrowP[0] += blockSize;
+                }
+                context.drawImage(imgArrowE, arrowP[0], arrowP[1], imageSize, imageSize);
+                break;
+            case "ArrowDown":
+            case "S":
+            case "s":
+                if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
+                    && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
+                    arrowE[1]++;
+                    arrowP[1] += blockSize;
+                }
+                context.drawImage(imgArrowS, arrowP[0], arrowP[1], imageSize, imageSize);
+                break;
+            case "ArrowLeft":
+            case "A":
+            case "a":
+                if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
+                    && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
+                    arrowE[0]--;
+                    arrowP[0] -= blockSize;
+                }
+                context.drawImage(imgArrowW, arrowP[0], arrowP[1], imageSize, imageSize);
+                break;
+        }
 
-    // The player has reached the end of the maze.
-    if ( mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1] ) {
-        mazeSolved = true;
-        completedScreen.style.display = 'block';
+        // The player has reached the end of the maze.
+        if ( mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+            mazeSolved = true;
+            completedScreen.style.display = 'block';
+        }
     }
 }
 
-/**
- * This resets the variables for the maze during submits or resizing.
- * The maze is no longer solves and the canvas is cleared.
- * The row and column inputs are unselected and movement listeners are removed.
- */
-function resetMazeVariables() {
-    // This sets the maze being solved to false
-    mazeSolved = false;
-
-    // This clears the canvas of any previous maze
-    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-
-    // This unselects the row and column inputs.
-    rowInput.blur();
-    colInput.blur();
-
-    // This removes the event listeners to avoid duplicates
-    document.removeEventListener("keyup", keyUpHandler);
-    upPad.removeEventListener("click", clickHandlerUp);
-    downPad.removeEventListener("click", clickHandlerDown);
-    leftPad.removeEventListener("click", clickHandlerLeft);
-    rightPad.removeEventListener("click", clickHandlerRight);
+function logDim() {
+    console.log("Inner Width: " + window.innerWidth);
+    console.log("Avail Width: " + screen.availWidth);
+    console.log("Client Width: " + document.documentElement.clientWidth);
+    console.log("-----");
+    console.log("Inner Height: " + window.innerHeight);
+    console.log("Avail Height: " + screen.availHeight);
+    console.log("Client Height: " + document.documentElement.clientHeight);
+    console.log("//////////////////////");
 }
