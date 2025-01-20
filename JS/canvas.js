@@ -202,6 +202,9 @@ sizeForm.addEventListener('submit', function (event) {
     // This resets the variables for the maze to avoid unwanted behavior
     resetMazeVariables();
 
+    // This clears the canvas of any previous maze
+    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
     // This unselects the row and column inputs.
     rowInput.blur();
     colInput.blur();
@@ -335,15 +338,12 @@ function adjustMaze(canvas, dPad) {
 
 /**
  * This resets the variables for the maze during submits or resizing.
- * The maze is no longer solves and the canvas is cleared.
+ * The maze is no longer solves.
  * The movement listeners are removed.
  */
 function resetMazeVariables() {
     // This sets the maze being solved to false
     mazeSolved = false;
-
-    // This clears the canvas of any previous maze
-    context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
 
     // This removes the event listeners to avoid duplicates
     document.removeEventListener("keyup", keyUpHandler);
