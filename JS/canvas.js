@@ -114,6 +114,8 @@ window.addEventListener('load', function() {
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
+    console.alert("Resizing"); 
+
     // This is here to account for android soft keyboard 
     if ( document.activeElement != rowInput && this.document.activeElement != colInput ) {
         // This resets the variables for the maze to avoid unwanted behavior
@@ -192,6 +194,8 @@ colInput.addEventListener('keyup', function resetCol(event) {
 
 // This creates and displays a new maze when given new input
 sizeForm.addEventListener('submit', function (event) {
+    console.alert("Submit");
+
     // This prevents the form from refreshing the page
     event.preventDefault();
 
