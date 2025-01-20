@@ -190,6 +190,10 @@ sizeForm.addEventListener('submit', function (event) {
     // This resets the variables for the maze to avoid unwanted behavior
     resetMazeVariables();
 
+    // This unselects the row and column inputs.
+    rowInput.blur();
+    colInput.blur();
+
     // This saves the row and column values from the input
     rows = rowInput.value;
     columns = colInput.value;
@@ -302,11 +306,11 @@ function adjustMaze(canvas, dPad) {
     } else {
         // This sets the maze canvas's dimensions
         canvas.width = getMaxMazeWidth(1.0, 0);
-        canvas.height = getMaxMazeHeight(0.8, 5);
+        canvas.height = getMaxMazeHeight(0.7, 5);
 
         // This sets the width of the d-pad
-        dPad.width = getMaxMazeHeight(0.2, 5);
-        dPad.height = getMaxMazeHeight(0.2, 5);
+        dPad.width = getMaxMazeHeight(0.3, 5);
+        dPad.height = getMaxMazeHeight(0.3, 5);
 
         // This adjust the orientation
         mazeDiv.style.flexDirection = 'column';
@@ -320,7 +324,7 @@ function adjustMaze(canvas, dPad) {
 /**
  * This resets the variables for the maze during submits or resizing.
  * The maze is no longer solves and the canvas is cleared.
- * The row and column inputs are unselected and movement listeners are removed.
+ * The movement listeners are removed.
  */
 function resetMazeVariables() {
     // This sets the maze being solved to false
@@ -328,10 +332,6 @@ function resetMazeVariables() {
 
     // This clears the canvas of any previous maze
     context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-
-    // This unselects the row and column inputs.
-    rowInput.blur();
-    colInput.blur();
 
     // This removes the event listeners to avoid duplicates
     document.removeEventListener("keyup", keyUpHandler);

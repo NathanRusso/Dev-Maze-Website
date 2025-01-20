@@ -69,7 +69,7 @@
     margin-left: 5px;
 }
 
-@media screen and (max-width: 363px) {
+@media screen and (max-width: 367px) {
     #size_input {
         padding-bottom: 10px;
     }
