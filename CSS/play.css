@@ -109,6 +109,7 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
+    touch-action: none;
     user-select: none;
 }
 

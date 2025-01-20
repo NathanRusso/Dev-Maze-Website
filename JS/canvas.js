@@ -114,6 +114,9 @@ window.addEventListener("load", function() {
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
+    window.alert("Resize...");
+
+
     // This resets the variables for the maze to avoid unwanted behavior
     resetMazeVariables();
 
