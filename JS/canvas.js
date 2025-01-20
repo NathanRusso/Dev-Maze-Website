@@ -108,30 +108,38 @@ const clickHandlerLeft = () => { movePlayer("ArrowLeft"); };
 const clickHandlerRight = () => { movePlayer("ArrowRight"); };
 
 // Ensure imageMapResize is called after the page has loaded
-window.addEventListener("load", function() { 
+window.addEventListener('load', function() { 
     imageMapResize();
 });
 
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
-    // This resets the variables for the maze to avoid unwanted behavior
-    resetMazeVariables();
+    // This is here to account for android soft keyboard 
+    if ( document.activeElement != rowInput && this.document.activeElement != colInput ) {
+        // This resets the variables for the maze to avoid unwanted behavior
+        resetMazeVariables();
 
-    // This updates the screen width and height and the upper height
-    screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
-    screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
-    screenHeightLimited = screenHeight - playTotalMargins - playTitle.clientHeight - sizeInput.clientHeight;
+        // This updates the screen width and height and the upper height
+        screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
+        screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
+        screenHeightLimited = screenHeight - playTotalMargins - playTitle.clientHeight - sizeInput.clientHeight;
 
-    // This updates the maze canvas's and d-pad's dimensions
-    // This updates the orientation of those elements based on the screen ratio
-    adjustMaze(mazeCanvas, imgDPad);
+        // This updates the maze canvas's and d-pad's dimensions
+        // This updates the orientation of those elements based on the screen ratio
+        adjustMaze(mazeCanvas, imgDPad);
 
-    // This updates the maximum values for the row and column inputs.
-    // It also resets their values
-    rowInput.max = getMaxRow();
-    colInput.max = getMaxCol();
-    rowInput.value = 1;
-    colInput.value = 1;
+        // This updates the maximum values for the row and column inputs.
+        // It also resets their values
+        rowInput.max = getMaxRow();
+        colInput.max = getMaxCol();
+    }
+    
+    // This keeps the row and column inputs within the max
+    if (Number(rowInput.value) > rowInput.max) {
+        rowInput.value = rowInput.max;
+    } else if (Number(colInput.value) > colInput.max) {
+        colInput.value = colInput.max;
+    }
 });
 
 /**
