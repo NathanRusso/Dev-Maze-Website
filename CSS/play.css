@@ -33,6 +33,7 @@
 }
 
 #completed_button {
+    color: black;
     border: none;
     background: transparent;
     font-family: 'Times New Roman', Times, serif;
