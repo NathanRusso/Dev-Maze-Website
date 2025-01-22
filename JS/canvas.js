@@ -171,8 +171,6 @@ rowInput.addEventListener('keyup', function resetRow(event) {
  * It must be any whole number between 1 and the max.
  */
 colInput.addEventListener('keyup', function resetCol(event) {
-    event.preventDefault();
-
     let colValue = colInput.value;
     if (isNaN(colValue)) {
         colInput.value = 1;
