@@ -2,6 +2,10 @@ p, h2 {
     text-align: left;
 }
 
+#back {
+    text-align: center;
+}
+
 #instructions_title {
     min-width: 330px;
 }
