@@ -1,10 +1,10 @@
 // This gets and loads all of the sounds for the game
-const soundMove = new Audio("https://s3.csh.rit.edu/devmaze/blip_sound_effect.mp3");
-const soundError = new Audio("https://s3.csh.rit.edu/devmaze/error_sound_effect.mp3");
-const soundGenerate = new Audio("https://s3.csh.rit.edu/devmaze/item_sound_effect.mp3");
-const soundFireworks = new Audio("https://s3.csh.rit.edu/devmaze/fireworks_sound_effect.mp3");
-const soundComplete = new Audio("https://s3.csh.rit.edu/devmaze/upgrade_sound_effect.mp3");
-const soundRestart = new Audio("https://s3.csh.rit.edu/devmaze/congrats_sound_effect.mp3");
+const soundMove = new Audio("https://s3.csh.rit.edu/devmaze-audio/blip_sound_effect.mp3");
+const soundError = new Audio("https://s3.csh.rit.edu/devmaze-audio/error_sound_effect.mp3");
+const soundGenerate = new Audio("https://s3.csh.rit.edu/devmaze-audio/item_sound_effect.mp3");
+const soundFireworks = new Audio("https://s3.csh.rit.edu/devmaze-audio/fireworks_sound_effect.mp3");
+const soundComplete = new Audio("https://s3.csh.rit.edu/devmaze-audio/upgrade_sound_effect.mp3");
+const soundRestart = new Audio("https://s3.csh.rit.edu/devmaze-audio/congrats_sound_effect.mp3");
 soundMove.load();
 soundError.load();
 soundGenerate.load();
