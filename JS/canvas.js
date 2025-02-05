@@ -1,4 +1,5 @@
-// Exports the Maze class to be used in other files
+// Exports the sound effects and Maze class to be used in other files
+import * as sound from "/JS/audio.js";
 import { Maze } from "/JS/maze.js";
 
 
@@ -151,7 +152,8 @@ window.addEventListener('resize', function () {
     // This keeps the row and column inputs within the max
     if (Number(rowInput.value) > rowInput.max) {
         rowInput.value = rowInput.max;
-    } else if (Number(colInput.value) > colInput.max) {
+    }
+    if (Number(colInput.value) > colInput.max) {
         colInput.value = colInput.max;
     }
 });
@@ -208,6 +210,9 @@ colInput.addEventListener('keyup', function resetCol(event) {
 sizeForm.addEventListener('submit', function (event) {
     // This prevents the form from refreshing the page
     event.preventDefault();
+
+    // This plays the maze generation sound
+    sound.playGenerate();
 
     // This resets the variables for the maze to avoid unwanted behavior
     resetMazeVariables();
@@ -266,6 +271,11 @@ sizeForm.addEventListener('submit', function (event) {
 
 // This removes the completed message
 completedButton.addEventListener('click', function () {
+    // This plays the restart sound 
+    sound.stopFinishSounds();
+    sound.playRestart();
+
+    // This hides the completed screen
     completedScreen.style.display = 'none';
 });
 
@@ -428,8 +438,11 @@ function movePlayer(key) {
         case "w":
             if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
                 && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
+                sound.playMove();
                 arrowE[1]--;
                 arrowP[1] -= blockSize;
+            } else {
+                sound.playError();
             }
             context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
         break;
@@ -437,8 +450,11 @@ function movePlayer(key) {
         case "d":
             if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
                 && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
+                sound.playMove();
                 arrowE[0]++;
                 arrowP[0] += blockSize;
+            } else {
+                sound.playError();
             }
             context.drawImage(imgArrowE, arrowP[0], arrowP[1], imageSize, imageSize);
             break;
@@ -446,8 +462,11 @@ function movePlayer(key) {
         case "s":
             if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
                 && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
+                sound.playMove();
                 arrowE[1]++;
                 arrowP[1] += blockSize;
+            } else {
+                sound.playError();
             }
             context.drawImage(imgArrowS, arrowP[0], arrowP[1], imageSize, imageSize);
             break;
@@ -455,8 +474,11 @@ function movePlayer(key) {
         case "a":
             if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
                 && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
+                sound.playMove();
                 arrowE[0]--;
                 arrowP[0] -= blockSize;
+            } else {
+                sound.playError();
             }
             context.drawImage(imgArrowW, arrowP[0], arrowP[1], imageSize, imageSize);
             break;
@@ -464,6 +486,11 @@ function movePlayer(key) {
 
     // The player has reached the end of the maze.
     if ( mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+        // This plays the finish sounds
+        sound.playFireworks();
+        sound.playComplete();
+
+        // This reveals the completed screen
         mazeSolved = true;
         completedScreen.style.display = 'block';
     }
