@@ -9,5 +9,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY *.html /usr/share/nginx/html/
 COPY CSS /usr/share/nginx/html/CSS
 COPY JS /usr/share/nginx/html/JS
-COPY Images /usr/share/nginx/html/Images
 COPY favicon.ico /usr/share/nginx/html/
