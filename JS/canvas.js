@@ -445,7 +445,7 @@ function movePlayer(key) {
                 sound.playError();
             }
             context.drawImage(imgArrowN, arrowP[0], arrowP[1], imageSize, imageSize);
-        break;
+            break;
         case "arrowright":
         case "d":
             if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
