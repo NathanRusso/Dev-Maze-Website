@@ -117,15 +117,22 @@ export class Maze {
         let length = visited.length;
 
         // This saves the index of the point after the duplicate
-        let after = this.#indexIn2dArray(visited, next) + 1;
+        let afterIndex = this.#indexIn2dArray(visited, next) + 1;
+        let after = visited[afterIndex];
+
+        // This fixes the walls for the duplicated point
+        if (next[0] - 1 == after[0]) { this.#getBlockAt(next).northWall = true; }
+        else if (next[1] + 1 == after[1]) { this.#getBlockAt(next).eastWall = true; }
+        else if (next[0] + 1 == after[0]) { this.#getBlockAt(next).southWall = true; }
+        else if (next[1] - 1 == after[1]) { this.#getBlockAt(next).westWall = true; }
 
         // This resets all blocks after the duplicate
-        for (let i = after; i < visited.length; i++) {
+        for (let i = afterIndex; i < length; i++) {
             this.#getBlockAt(visited[i]).reset();
         }
 
         // This removes the loop from the path
-        visited.splice(after, length - after);
+        visited.splice(afterIndex, length - afterIndex);
     }
 
     /**
