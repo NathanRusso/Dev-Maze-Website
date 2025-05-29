@@ -21,7 +21,6 @@ function initializeFit() {
     // This adjust the home title size to fit limit.
     fitTitle.element.addEventListener("fit", () => {
         const titleFont = window.getComputedStyle(fitTitle.element).fontSize;
-        console.log("Title font after fit:", titleFont);
         fitTitle.unsubscribe();
         fitTitle.element.style.fontSize = titleFont;
     });
@@ -29,7 +28,6 @@ function initializeFit() {
     // This adjust the home options sizes to fit limits together.
     fitOptions.element.addEventListener("fit", () => {
         const optionsFont = window.getComputedStyle(fitOptions.element).fontSize;
-        console.log("Instructions font after fit:", optionsFont);
         fitOptions.unsubscribe();
         fitOptions.element.style.fontSize = optionsFont;
         play.style.fontSize = optionsFont;
@@ -41,7 +39,6 @@ function initializeFit() {
  * This functions resizes the text on the home page.
  */
 function resize() {
-    console.log("Resizing home page text...");   
     initializeFit();
     fitTitle.fit(true);
     fitOptions.fit(true);
