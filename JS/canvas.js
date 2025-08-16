@@ -120,7 +120,7 @@ const keyUpDownHandler = (event) => {
             // This moves the player based on the key pressed
             movePlayer(key);
         }
-    } else if (key === 'enter'  && mazeSolved && completedScreen.style.display != 'none') {
+    } else if (key === 'enter' && mazeSolved && completedScreen.style.display != 'none') {
         if (event.type === 'keydown') {
             event.preventDefault();
         } else if (event.type === 'keyup') {
