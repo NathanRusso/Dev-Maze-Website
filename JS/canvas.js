@@ -36,6 +36,7 @@ const sizeForm = document.getElementById("size_form");
 // These are the row and columns input elements
 const rowInput = document.getElementById("row_input");
 const colInput = document.getElementById("col_input");
+const subInput = document.getElementById("sub_input");
 
 // This is the div that holds the d-pad and maze canvas
 const mazeDiv = document.getElementById("maze");
@@ -119,11 +120,17 @@ const keyUpDownHandler = (event) => {
             // This moves the player based on the key pressed
             movePlayer(key);
         }
+    } else if (key === 'enter'  && mazeSolved && completedScreen.style.display != 'none') {
+        if (event.type === 'keydown') {
+            event.preventDefault();
+        } else if (event.type === 'keyup') {
+            hideCompletedMessage();
+        }
     }
 };
 
 // Ensure imageMapResize is called after the page has loaded
-window.addEventListener('load', function() { 
+window.addEventListener('load', function () { 
     imageMapResize();
 });
 
@@ -220,9 +227,10 @@ sizeForm.addEventListener('submit', function (event) {
     // This clears the canvas of any previous maze
     context.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
 
-    // This unselects the row and column inputs.
+    // This unselects the row and column inputs and selects the submit button
     rowInput.blur();
     colInput.blur();
+    subInput.focus();
 
     // This saves the row and column values from the input
     rows = rowInput.value;
@@ -269,15 +277,8 @@ sizeForm.addEventListener('submit', function (event) {
     rightPad.addEventListener("click", clickHandlerRight);
 });
 
-// This removes the completed message
-completedButton.addEventListener('click', function () {
-    // This plays the restart sound 
-    sound.stopFinishSounds();
-    sound.playRestart();
-
-    // This hides the completed screen
-    completedScreen.style.display = 'none';
-});
+// This hides the completed message
+completedButton.addEventListener('click', hideCompletedMessage);
 
 
 //------------------------------ FUNCTIONS BELOW ------------------------------//
@@ -355,6 +356,19 @@ function adjustMaze(canvas, dPad) {
         canvas.style.marginBottom = '5px';
         dPad.style.marginTop = '5px';
     }
+}
+
+/**
+ * This hides the completed message and plays the restart sound.
+ */
+function hideCompletedMessage() {
+    // This plays the restart sound
+    sound.stopFinishSounds();
+    sound.playRestart();
+
+    // This hides the completed screen and focuses the submit input
+    completedScreen.style.display = 'none';
+    subInput.focus();
 }
 
 /**
@@ -493,5 +507,6 @@ function movePlayer(key) {
         // This reveals the completed screen
         mazeSolved = true;
         completedScreen.style.display = 'block';
+        subInput.blur();
     }
 }
