@@ -112,7 +112,7 @@ const keyUpDownHandler = (event) => {
 
     // This only acts when the row and column input are not in use
     if (allowedMovement.has(key) && document.activeElement != rowInput && document.activeElement != colInput) {
-        if (event.type === 'keydown' ) {
+        if (event.type === 'keydown') {
             // This prevents the default behavior of the arrow keys to stop scrolling
             event.preventDefault();
         } else if (event.type === 'keyup') {
@@ -130,7 +130,7 @@ window.addEventListener('load', function() {
 // Changes variables when screen changes sizes
 window.addEventListener('resize', function () {
     // This is here to account for android soft keyboard 
-    if ( document.activeElement != rowInput && document.activeElement != colInput ) {
+    if (document.activeElement != rowInput && document.activeElement != colInput) {
         // This resets the variables for the maze to avoid unwanted behavior
         resetMazeVariables();
 
@@ -235,7 +235,7 @@ sizeForm.addEventListener('submit', function (event) {
 
     // This calculates the size of the blocks in the maze
     blockSize = Math.floor(Math.min(mazeCanvas.height / rows, mazeCanvas.width / columns) / 2) * 2;
-    if ( blockSize < 20 ) { blockSize = minBlockSize; }
+    if (blockSize < 20) { blockSize = minBlockSize; }
     imageSize = Math.floor(blockSize * 0.8);
     let imageBuffer = Math.floor((blockSize - imageSize) / 2);
 
@@ -324,7 +324,7 @@ function getMaxCol() { return mazeCanvas.width / minBlockSize; }
  * @param {*} dPad - The d-pad to move the player
  */
 function adjustMaze(canvas, dPad) {
-    if ( screenWidth >= screenHeight ) {
+    if (screenWidth >= screenHeight) {
         // This sets the maze canvas's dimensions
         canvas.width = getMaxMazeWidth(0.8, 5);
         canvas.height = getMaxMazeHeight(1.0, 0);
@@ -385,8 +385,8 @@ function resetMazeVariables() {
  * @param {*} blockSize - The size of each block in the maze.
  */
 function drawMaze(completedMaze, rows, columns, ct, blockSize, widthBuffer) {
-    for ( let r = 0; r < rows; r++ ) {
-        for ( let c = 0; c < columns; c++ ) {
+    for ( let r = 0; r < rows; r++) {
+        for ( let c = 0; c < columns; c++) {
             ct.beginPath();
             if (completedMaze[r][c].northWall) {
                 ct.moveTo(c * blockSize + widthBuffer, r * blockSize);
@@ -426,9 +426,9 @@ function movePlayer(key) {
     context.clearRect(arrowP[0], arrowP[1], imageSize, imageSize);
 
     // This redraws the start or stop sign if the player is on it
-    if ( arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+    if (arrowP[0] == end[0] && arrowP[1] == end[1]) {
         context.drawImage(imgStop, end[0], end[1], imageSize, imageSize);
-    } else if ( arrowP[0] == start[0] && arrowP[1] == start[1] ) {
+    } else if (arrowP[0] == start[0] && arrowP[1] == start[1]) {
         context.drawImage(imgStart, start[0], start[1], imageSize, imageSize);
     }
 
@@ -436,8 +436,8 @@ function movePlayer(key) {
     switch (key) {
         case "arrowup":
         case "w":
-            if ( arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
-                && maze[arrowE[1] - 1][arrowE[0]].southWall == false ) {
+            if (arrowE[1] > 0 && maze[arrowE[1]][arrowE[0]].northWall == false 
+                && maze[arrowE[1] - 1][arrowE[0]].southWall == false) {
                 sound.playMove();
                 arrowE[1]--;
                 arrowP[1] -= blockSize;
@@ -448,8 +448,8 @@ function movePlayer(key) {
             break;
         case "arrowright":
         case "d":
-            if ( arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
-                && maze[arrowE[1]][arrowE[0] + 1].westWall == false ) {
+            if (arrowE[0] < columns - 1 && maze[arrowE[1]][arrowE[0]].eastWall == false
+                && maze[arrowE[1]][arrowE[0] + 1].westWall == false) {
                 sound.playMove();
                 arrowE[0]++;
                 arrowP[0] += blockSize;
@@ -460,8 +460,8 @@ function movePlayer(key) {
             break;
         case "arrowdown":
         case "s":
-            if ( arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
-                && maze[arrowE[1] + 1][arrowE[0]].northWall == false ) {
+            if (arrowE[1] < rows - 1 && maze[arrowE[1]][arrowE[0]].southWall == false
+                && maze[arrowE[1] + 1][arrowE[0]].northWall == false) {
                 sound.playMove();
                 arrowE[1]++;
                 arrowP[1] += blockSize;
@@ -472,8 +472,8 @@ function movePlayer(key) {
             break;
         case "arrowleft":
         case "a":
-            if ( arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
-                && maze[arrowE[1]][arrowE[0] - 1].eastWall == false ) {
+            if (arrowE[0] > 0 && maze[arrowE[1]][arrowE[0]].westWall == false
+                && maze[arrowE[1]][arrowE[0] - 1].eastWall == false) {
                 sound.playMove();
                 arrowE[0]--;
                 arrowP[0] -= blockSize;
@@ -485,7 +485,7 @@ function movePlayer(key) {
     }
 
     // The player has reached the end of the maze.
-    if ( mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1] ) {
+    if (mazeSolved == false && arrowP[0] == end[0] && arrowP[1] == end[1]) {
         // This plays the finish sounds
         sound.playFireworks();
         sound.playComplete();
