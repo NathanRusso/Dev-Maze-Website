@@ -16,7 +16,7 @@ soundRestart.load();
  * This plays the sound when the player moves freely.
  */
 export function playMove() {
-    if (!soundMove.paused) { soundMove.pause(); }
+    if (!soundMove.paused) soundMove.pause();
     soundMove.currentTime = 0;
     soundMove.play();
 }
@@ -25,7 +25,7 @@ export function playMove() {
  * This plays the error sound when the player tries to move into a wall.
  */
 export function playError() {
-    if (!soundError.paused) { soundError.pause(); }
+    if (!soundError.paused) soundError.pause();
     soundError.currentTime = 0;
     soundError.play();
 }
@@ -34,7 +34,7 @@ export function playError() {
  * This plays the sound when the maze is generated.
  */
 export function playGenerate() {
-    if (!soundGenerate.paused) { soundGenerate.pause(); }
+    if (!soundGenerate.paused) soundGenerate.pause();
     soundGenerate.currentTime = 0;
     soundGenerate.play();
 }
@@ -43,7 +43,7 @@ export function playGenerate() {
  * This plays fireworks for the player when they complete the maze.
  */
 export function playFireworks() {
-    if (!soundFireworks.paused) { soundFireworks.pause(); }
+    if (!soundFireworks.paused) soundFireworks.pause();
     soundFireworks.currentTime = 0;
     soundFireworks.play();
     soundFireworks.loop = true;
@@ -53,7 +53,7 @@ export function playFireworks() {
  * This plays the sound when the player completes the maze.
  */
 export function playComplete() {
-    if (!soundComplete.paused) { soundComplete.pause(); }
+    if (!soundComplete.paused) soundComplete.pause();
     soundComplete.currentTime = 0;
     soundComplete.play();
 }
@@ -62,7 +62,7 @@ export function playComplete() {
  * This plays the sound when the player returns from the completed screen.
  */
 export function playRestart() {
-    if (!soundRestart.paused) { soundRestart.pause(); }
+    if (!soundRestart.paused) soundRestart.pause();
     soundRestart.currentTime = 0;
     soundRestart.play();
 }
@@ -71,8 +71,8 @@ export function playRestart() {
  * This stops the fireworks and completion sounds.
  */
 export function stopFinishSounds() {
-    if (!soundFireworks.paused) { soundFireworks.pause(); }
+    if (!soundFireworks.paused) soundFireworks.pause();
     soundFireworks.currentTime = 0;
-    if (!soundComplete.paused) { soundComplete.pause(); }
+    if (!soundComplete.paused) soundComplete.pause();
     soundComplete.currentTime = 0;
 }
