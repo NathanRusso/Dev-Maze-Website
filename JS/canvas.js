@@ -6,9 +6,6 @@ import { Maze } from "/JS/maze.js";
 //------------------------------ CONSTANTS BELOW ------------------------------//
 
 
-// This is the margin of the body element
-const bodyMargin = parseInt(window.getComputedStyle(document.body).marginRight, 10);
-
 // This the d-pad that can move the player
 const imgDPad = document.getElementById("img_d-pad");
 
@@ -66,9 +63,10 @@ const minBlockSize = 20;
 
 
 // This sets current available width and height of the screen
+let bodyMargin = parseInt(window.getComputedStyle(document.body).marginRight, 10);
+let playTotalMargins = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
 let screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
 let screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
-let playTotalMargins = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
 let screenHeightLimited = screenHeight - playTotalMargins - playTitle.offsetHeight - sizeInput.offsetHeight;
 
 // This sets the maze canvas's and d-pad's dimensions
@@ -142,6 +140,8 @@ window.addEventListener('resize', function () {
         resetMazeVariables();
 
         // This updates the screen width and height and the upper height
+        bodyMargin = parseInt(window.getComputedStyle(document.body).marginRight, 10);
+        playTotalMargins = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
         screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
         screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
         screenHeightLimited = screenHeight - playTotalMargins - playTitle.clientHeight - sizeInput.clientHeight;
@@ -157,12 +157,8 @@ window.addEventListener('resize', function () {
     }
     
     // This keeps the row and column inputs within the max
-    if (Number(rowInput.value) > rowInput.max) {
-        rowInput.value = rowInput.max;
-    }
-    if (Number(colInput.value) > colInput.max) {
-        colInput.value = colInput.max;
-    }
+    if (Number(rowInput.value) > rowInput.max) rowInput.value = rowInput.max;
+    if (Number(colInput.value) > colInput.max) colInput.value = colInput.max;
 });
 
 /**
@@ -171,20 +167,16 @@ window.addEventListener('resize', function () {
  */
 rowInput.addEventListener('keyup', function resetRow(event) {
     let rowValue = rowInput.value;
-    if (isNaN(rowValue)) {
-        rowInput.value = 1;
-    } else if (!allowedKeys.includes(event.key.toLowerCase())) {
-        rowInput.value = 1;
+    if (isNaN(rowValue) || !allowedKeys.includes(event.key.toLowerCase())) {
+        rowInput.value = 1; 
     } else if (rowValue.length != 0) {
-        rowValue = Number(rowValue);
-        if (!Number.isInteger(rowValue)) {
-            rowValue = Math.floor(rowValue);
-            rowInput.value = rowValue;
-        }
+        rowValue = Math.floor(Number(rowValue));
         if (rowValue < 1) {
             rowInput.value = 1;
         } else if (rowValue > Number(rowInput.max)) {
             rowInput.value = Number(rowInput.max);
+        } else {
+            rowInput.value = rowValue;
         }
     }
 });
@@ -195,20 +187,16 @@ rowInput.addEventListener('keyup', function resetRow(event) {
  */
 colInput.addEventListener('keyup', function resetCol(event) {
     let colValue = colInput.value;
-    if (isNaN(colValue)) {
-        colInput.value = 1;
-    } else if (!allowedKeys.includes(event.key.toLowerCase())) {
+    if (isNaN(colValue) || !allowedKeys.includes(event.key.toLowerCase())) {
         colInput.value = 1;
     } else if (colValue.length != 0) {
-        colValue = Number(colValue);
-        if (!Number.isInteger(colValue)) {
-            colValue = Math.floor(colValue);
-            colInput.value = colValue;
-        }
+        colValue = Math.floor(Number(colValue));
         if (colValue < 1) {
             colInput.value = 1;
         } else if (colValue > Number(colInput.max)) {
             colInput.value = Number(colInput.max);
+        } else {
+            colInput.value = colValue;
         }
     }
 });
@@ -292,7 +280,7 @@ completedButton.addEventListener('click', hideCompletedMessage);
  * @param {*} margin - The margin of either the canvas or d-pad
  * @returns the possible width of the maze canvas
  */
-function getMaxMazeWidth(limiter, margin) { return Math.floor((screenWidth * limiter - margin) / 20) * 20; }
+function getMaxMazeWidth(limiter=1, margin=0) { return Math.floor((screenWidth * limiter - margin) / 20) * 20; }
 
 /**
  * This finds the size of the maze canvas height based on the screen height and limiter.
@@ -302,7 +290,7 @@ function getMaxMazeWidth(limiter, margin) { return Math.floor((screenWidth * lim
  * @param {*} margin - The margin of either the canvas or d-pad
  * @returns the possible height of the maze canvas
  */
-function getMaxMazeHeight(limiter, margin) { return Math.floor((screenHeightLimited * limiter - margin) / 20) * 20; }
+function getMaxMazeHeight(limiter=1, margin=0) { return Math.floor((screenHeightLimited * limiter - margin) / 20) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,
