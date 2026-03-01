@@ -63,11 +63,13 @@ const minBlockSize = 20;
 
 
 // This sets current available width and height of the screen
-let bodyMargin = parseInt(window.getComputedStyle(document.body).marginRight, 10);
-let playTotalMargins = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
-let screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
-let screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
-let screenHeightLimited = screenHeight - playTotalMargins - playTitle.offsetHeight - sizeInput.offsetHeight;
+let bodyMarginBoth = parseInt(window.getComputedStyle(document.body).marginRight, 10) * 2;
+let playMarginsBoth = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
+let mazeEdgeBorderBoth = parseInt(window.getComputedStyle(mazeCanvas).border, 10) * 2;
+let screenWidth = document.documentElement.clientWidth;
+let screenHeight = document.documentElement.clientHeight;
+let playWidth = screenWidth - bodyMarginBoth - mazeEdgeBorderBoth;
+let playHight = screenHeight - bodyMarginBoth - mazeEdgeBorderBoth - playMarginsBoth - playTitle.offsetHeight - sizeInput.offsetHeight;
 
 // This sets the maze canvas's and d-pad's dimensions
 // This changes the orientation of those elements based on the screen ratio
@@ -140,11 +142,13 @@ window.addEventListener('resize', function () {
         resetMazeVariables();
 
         // This updates the screen width and height and the upper height
-        bodyMargin = parseInt(window.getComputedStyle(document.body).marginRight, 10);
-        playTotalMargins = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
-        screenWidth = document.documentElement.clientWidth - bodyMargin * 2;
-        screenHeight = document.documentElement.clientHeight - bodyMargin * 2;
-        screenHeightLimited = screenHeight - playTotalMargins - playTitle.clientHeight - sizeInput.clientHeight;
+        bodyMarginBoth = parseInt(window.getComputedStyle(document.body).marginRight, 10) * 2;
+        playMarginsBoth = parseInt(window.getComputedStyle(playTitle).margin, 10) * 2;
+        mazeEdgeBorderBoth = parseInt(window.getComputedStyle(mazeCanvas).border, 10) * 2;
+        screenWidth = document.documentElement.clientWidth;
+        screenHeight = document.documentElement.clientHeight;
+        playWidth = screenWidth - bodyMarginBoth - mazeEdgeBorderBoth;
+        playHight = screenHeight - bodyMarginBoth - mazeEdgeBorderBoth - playMarginsBoth - playTitle.offsetHeight - sizeInput.offsetHeight;
 
         // This updates the maze canvas's and d-pad's dimensions
         // This updates the orientation of those elements based on the screen ratio
@@ -280,7 +284,7 @@ completedButton.addEventListener('click', hideCompletedMessage);
  * @param {*} margin - The margin of either the canvas or d-pad
  * @returns the possible width of the maze canvas
  */
-function getMaxMazeWidth(limiter=1, margin=0) { return Math.floor((screenWidth * limiter - margin) / 20) * 20; }
+function getMaxMazeWidth(limiter=1, margin=0) { return Math.floor((playWidth * limiter - margin) / 20) * 20; }
 
 /**
  * This finds the size of the maze canvas height based on the screen height and limiter.
@@ -290,7 +294,7 @@ function getMaxMazeWidth(limiter=1, margin=0) { return Math.floor((screenWidth *
  * @param {*} margin - The margin of either the canvas or d-pad
  * @returns the possible height of the maze canvas
  */
-function getMaxMazeHeight(limiter=1, margin=0) { return Math.floor((screenHeightLimited * limiter - margin) / 20) * 20; }
+function getMaxMazeHeight(limiter=1, margin=0) { return Math.floor((playHight * limiter - margin) / 20) * 20; }
 
 /**
  * This function finds the maximum number of rows that the maze can have,
@@ -314,11 +318,11 @@ function getMaxCol() { return mazeCanvas.width / minBlockSize; }
  */
 function adjustMaze(canvas, dPad) {
     if (screenWidth >= screenHeight) {
-        // This sets the maze canvas's dimensions
+        // This sets the width and hight of the maze canvas
         canvas.width = getMaxMazeWidth(0.8, 5);
         canvas.height = getMaxMazeHeight(1.0, 0);
 
-        // This sets the width of the d-pad
+        // This sets the width and hight of the d-pad
         dPad.width = getMaxMazeWidth(0.2, 5);
         dPad.height = getMaxMazeWidth(0.2, 5);
 
